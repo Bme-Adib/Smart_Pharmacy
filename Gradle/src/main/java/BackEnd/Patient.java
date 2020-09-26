@@ -1,9 +1,10 @@
-package com.ayoush;
+package BackEnd;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Patient {
+    private String id;
     private String firstName;
     private String lastName;
     private String gender;
@@ -31,6 +32,14 @@ public class Patient {
 
     //getter and setters
 
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public long getAgeMonths() {
         return ageMonths;

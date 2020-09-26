@@ -1,4 +1,4 @@
-package com.ayoush.GUI;
+package GUI;
 
 import javax.swing.*;
 
