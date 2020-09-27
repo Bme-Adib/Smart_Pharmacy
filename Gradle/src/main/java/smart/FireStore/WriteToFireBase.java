@@ -1,5 +1,6 @@
 package smart.FireStore;
 
+import smart.BackEnd.Doctor;
 import smart.BackEnd.Patient;
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -43,6 +44,20 @@ public class WriteToFireBase {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection("Patients").document(patient.getId());
         ApiFuture<WriteResult> result = docRef.set(patient);
+
+        try {
+            System.out.println("Update time : " + result.get().getUpdateTime());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());;
+        }
+
+    }
+
+
+    public void writeDoctorToFireBase(Doctor doctor) {
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docRef = db.collection("Doctors").document(doctor.getId());
+        ApiFuture<WriteResult> result = docRef.set(doctor);
 
         try {
             System.out.println("Update time : " + result.get().getUpdateTime());
