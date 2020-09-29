@@ -5,7 +5,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
 public class Patient {
+    //System Information
     private String id;
+    private String dateCreated;
+
+    //Personal Information
     private String firstName;
     private String lastName;
     private String gender;
@@ -14,7 +18,6 @@ public class Patient {
     private int year;
     private long ageYears;
     private long ageMonths;
-    private String medicalCondition;
 
     public Patient(String firstName, String lastName, String gender, int day, int month, int year) {
         this.firstName = firstName;
@@ -29,18 +32,26 @@ public class Patient {
         this.ageYears = ChronoUnit.YEARS.between(dateOfBirth, now);
         this.ageMonths = ChronoUnit.MONTHS.between(dateOfBirth, now) % 12;
 
+        Time_Stamp time_stamp = new Time_Stamp();
+        dateCreated = time_stamp.getCreationTime();
 
-        id = "SP" + String.valueOf(year).substring(2) + String.format("%02d", month) + String.format("%02d", day) + new Random().nextInt(10000);
+        id = "SPPT" + String.valueOf(year).substring(2) + String.format("%02d", month) + String.format("%02d", day) + new Random().nextInt(10000);
     }
 
 
     //getter and setters
 
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
     public String getId() {
         return id;
     }
-
 
     public long getAgeMonths() {
         return ageMonths;
@@ -99,12 +110,4 @@ public class Patient {
         return ageYears;
     }
 
-
-    public String getMedicalCondition() {
-        return medicalCondition;
-    }
-
-    public void setMedicalCondition(String medicalCondition) {
-        this.medicalCondition = medicalCondition;
-    }
 }

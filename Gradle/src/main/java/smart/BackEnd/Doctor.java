@@ -3,9 +3,11 @@ package smart.BackEnd;
 import java.util.Random;
 
 public class Doctor {
+    //System Information
+    private String id;
+    private String dateCreated;
 
-
-
+    //Personal information
     private String firstName;
     private String lastName;
     private String gender;
@@ -17,7 +19,6 @@ public class Doctor {
     private String clinicPhoneNumber;
     private String email;
     private String licenseId;
-    private String id;
 
 
     public Doctor(String firstName, String lastName, String gender, int day, int month, int year, String specialty, String mobileNumber, String clinicPhoneNumber, String email, String licenseId) {
@@ -32,13 +33,24 @@ public class Doctor {
         this.clinicPhoneNumber = clinicPhoneNumber;
         this.email = email;
         this.licenseId = licenseId;
-        id = "SPDr" + String.valueOf(year).substring(2) + String.format("%02d", month) + String.format("%02d", day) + new Random().nextInt(10000);
 
-}
+        Time_Stamp time_stamp = new Time_Stamp();
+        dateCreated = time_stamp.getCreationTime();
+
+        id = "SPDR" + String.valueOf(year).substring(2) + String.format("%02d", month) + String.format("%02d", day) + new Random().nextInt(10000);
+    }
 
 
-//setters &getters
+//setters and getters
 
+
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
     public String getFirstName() {
         return firstName;
