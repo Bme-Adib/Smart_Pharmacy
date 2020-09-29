@@ -19,6 +19,9 @@ public class Patient {
     private long ageYears;
     private long ageMonths;
 
+    public Patient() {
+    }
+
     public Patient(String firstName, String lastName, String gender, int day, int month, int year) {
         this.firstName = firstName;
         this.lastName = lastName;

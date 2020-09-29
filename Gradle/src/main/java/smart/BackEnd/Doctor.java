@@ -20,6 +20,8 @@ public class Doctor {
     private String email;
     private String licenseId;
 
+    public Doctor() {
+    }
 
     public Doctor(String firstName, String lastName, String gender, int day, int month, int year, String specialty, String mobileNumber, String clinicPhoneNumber, String email, String licenseId) {
         this.firstName = firstName;
