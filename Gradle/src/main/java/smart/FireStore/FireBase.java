@@ -57,7 +57,6 @@ public class FireBase {
 
     }
 
-
     public void writeDoctorToFireBase(Doctor doctor) {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(DOCTORS).document(doctor.getId());
@@ -76,9 +75,7 @@ public class FireBase {
 
         Firestore db = FirestoreClient.getFirestore();
         CollectionReference collectionReference = db.collection(PATIENTS);
-
         ApiFuture<QuerySnapshot> query = collectionReference.get();
-
         QuerySnapshot querySnapshot = null;
 
         try {
