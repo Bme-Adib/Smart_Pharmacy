@@ -8,28 +8,35 @@ public class Patient {
     //System Information
     private String id;
     private String dateCreated;
-
     //Personal Information
     private String firstName;
     private String lastName;
-    private String fullName;
     private String gender;
     private int day;
     private int month;
     private int year;
+    private String email;
+    private String phoneNumber;
+    //Auto Complete
+    private String fullName;
     private long ageYears;
     private long ageMonths;
+
+
 
     public Patient() {
     }
 
-    public Patient(String firstName, String lastName, String gender, int day, int month, int year) {
+    public Patient(String firstName, String lastName, String gender, int day, int month, int year, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.day = day;
         this.month = month;
         this.year = year;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+
         this.fullName = this.firstName + " " + this.lastName;
 
         LocalDate dateOfBirth = LocalDate.of(year, month, day);
@@ -45,6 +52,22 @@ public class Patient {
 
 
     //getter and setters
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public void setId(String id) {
         this.id = id;

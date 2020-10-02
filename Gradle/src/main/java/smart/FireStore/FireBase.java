@@ -8,6 +8,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import smart.BackEnd.Doctor;
 import smart.BackEnd.Patient;
+import smart.BackEnd.Pharmacist;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,6 +20,7 @@ public class FireBase {
 
     public static final String PATIENTS = "Patients";
     public static final String DOCTORS = "Doctors";
+    public static final String PHARMACIST = "Pharmacist";
 
 
     public FireBase() {
@@ -57,7 +59,7 @@ public class FireBase {
 
     }
 
-    public void writeDoctorToFireBase(Doctor doctor) {
+    public void writePharmacistToFireBase(Doctor doctor) {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(DOCTORS).document(doctor.getId());
         ApiFuture<WriteResult> result = docRef.set(doctor);
@@ -67,6 +69,18 @@ public class FireBase {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             ;
+        }
+    }
+
+    public void writePharmacistToFireBase(Pharmacist pharmacist) {
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docRef = db.collection(PHARMACIST).document(pharmacist.getId());
+        ApiFuture<WriteResult> result = docRef.set(pharmacist);
+
+        try {
+            System.out.println("Update time : " + result.get().getUpdateTime());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -113,5 +127,28 @@ public class FireBase {
         }
 
         return doctorsDB;
+    }
+
+    public ArrayList<Pharmacist> readPharmacist() {
+        ArrayList<Pharmacist> pharmacistDB = new ArrayList<>();
+
+        Firestore db = FirestoreClient.getFirestore();
+        CollectionReference collectionReference = db.collection(PHARMACIST);
+
+        ApiFuture<QuerySnapshot> query = collectionReference.get();
+
+        QuerySnapshot querySnapshot = null;
+
+        try {
+            querySnapshot = query.get();
+            List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+            for (QueryDocumentSnapshot document : documents) {
+                pharmacistDB.add(document.toObject(Pharmacist.class));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return pharmacistDB;
     }
 }

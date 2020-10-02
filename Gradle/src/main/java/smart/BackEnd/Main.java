@@ -10,6 +10,7 @@ public class Main {
         FireBase fireBase = new FireBase();
         ArrayList<Patient> patientsDB = new ArrayList<>();
         patientsDB = fireBase.readPatients();
+
         boolean patientFound=false;
 
         Patient patient = new Patient();

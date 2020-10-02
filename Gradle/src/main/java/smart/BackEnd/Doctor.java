@@ -6,11 +6,9 @@ public class Doctor {
     //System Information
     private String id;
     private String dateCreated;
-
     //Personal information
     private String firstName;
     private String lastName;
-    private String fullName;
     private String gender;
     private int day;
     private int month;
@@ -20,6 +18,10 @@ public class Doctor {
     private String clinicPhoneNumber;
     private String email;
     private String licenseId;
+    private String password;
+    //Auto Complete
+    private String fullName;
+
 
     public Doctor() {
     }
@@ -47,6 +49,14 @@ public class Doctor {
 
 //setters and getters
 
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getFullName() {
         return fullName;
