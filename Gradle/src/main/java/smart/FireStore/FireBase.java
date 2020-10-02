@@ -71,6 +71,7 @@ public class FireBase {
     }
 
     public ArrayList<Patient> readPatients() {
+
         ArrayList<Patient> patientsDB = new ArrayList<>();
 
         Firestore db = FirestoreClient.getFirestore();

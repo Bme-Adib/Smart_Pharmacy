@@ -12,6 +12,7 @@ public class Patient {
     //Personal Information
     private String firstName;
     private String lastName;
+    private String fullName;
     private String gender;
     private int day;
     private int month;
@@ -29,6 +30,7 @@ public class Patient {
         this.day = day;
         this.month = month;
         this.year = year;
+        this.fullName = this.firstName + " " + this.lastName;
 
         LocalDate dateOfBirth = LocalDate.of(year, month, day);
         LocalDate now = LocalDate.now();
@@ -43,6 +45,26 @@ public class Patient {
 
 
     //getter and setters
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setAgeYears(long ageYears) {
+        this.ageYears = ageYears;
+    }
+
+    public void setAgeMonths(long ageMonths) {
+        this.ageMonths = ageMonths;
+    }
 
     public String getDateCreated() {
         return dateCreated;

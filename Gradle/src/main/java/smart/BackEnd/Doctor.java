@@ -10,6 +10,7 @@ public class Doctor {
     //Personal information
     private String firstName;
     private String lastName;
+    private String fullName;
     private String gender;
     private int day;
     private int month;
@@ -35,6 +36,7 @@ public class Doctor {
         this.clinicPhoneNumber = clinicPhoneNumber;
         this.email = email;
         this.licenseId = licenseId;
+        this.fullName = this.firstName + " " + this.lastName;
 
         Time_Stamp time_stamp = new Time_Stamp();
         dateCreated = time_stamp.getCreationTime();
@@ -45,6 +47,14 @@ public class Doctor {
 
 //setters and getters
 
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public String getDateCreated() {
         return dateCreated;
