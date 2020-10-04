@@ -18,7 +18,7 @@ public class Doctor {
     private String clinicPhoneNumber;
     private String email;
     private String licenseId;
-    private String password;
+    private String password = "123456789";
     //Auto Complete
     private String fullName;
 

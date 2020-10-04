@@ -9,7 +9,7 @@ public class Pharmacist {
     private String phoneNumber;
     private String licenseId;
 
-    private String password;
+    private String password = "123456789";
 
 
     public Pharmacist() {

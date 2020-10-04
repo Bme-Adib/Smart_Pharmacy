@@ -6,9 +6,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
-import smart.BackEnd.Doctor;
-import smart.BackEnd.Patient;
-import smart.BackEnd.Pharmacist;
+import smart.BackEnd.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,6 +18,8 @@ public class FireBase {
 
     public static final String PATIENTS = "Patients";
     public static final String DOCTORS = "Doctors";
+    public static final String SESSION = "Session";
+    public static final String DRUGS = "Drugs";
     public static final String PHARMACIST = "Pharmacist";
 
 
@@ -59,7 +59,7 @@ public class FireBase {
 
     }
 
-    public void writePharmacistToFireBase(Doctor doctor) {
+    public void writeDoctorToFireBase(Doctor doctor) {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(DOCTORS).document(doctor.getId());
         ApiFuture<WriteResult> result = docRef.set(doctor);
@@ -150,5 +150,37 @@ public class FireBase {
         }
 
         return pharmacistDB;
+    }
+
+    public void writeSessionToPatient(String patientID, Session session) {
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docRef = db.collection(PATIENTS).document(patientID).collection(SESSION).document(session.getSessionID());
+        ApiFuture<WriteResult> result = docRef.set(session);
+
+        try {
+            System.out.println("Update time : " + result.get().getUpdateTime());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            ;
+        }
+
+    }
+
+    public void writeDrugsToSession(String patientID, String sessionID, ArrayList<Drug> drugsList) {
+        Firestore db = FirestoreClient.getFirestore();
+        CollectionReference colRef = db.collection(PATIENTS).document(patientID).collection(SESSION).document(sessionID).collection(DRUGS);
+
+        ApiFuture<WriteResult> result = null;
+        for (int i=0;i<drugsList.size();i++){
+            result = colRef.document(drugsList.get(i).getDrugName()).set(drugsList.get(i));
+        }
+
+        try {
+            System.out.println("Update time : " + result.get().getUpdateTime());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            ;
+        }
+
     }
 }
