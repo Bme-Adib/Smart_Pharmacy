@@ -2,12 +2,20 @@ package smart.BackEnd;
 
 import smart.FireStore.FireBase;
 
+import java.util.ArrayList;
+
 public class Test2 {
     public static void main(String[] args) {
-//        Pharmacist pharmacist = new Pharmacist("GMB","0655166888","TLG5699562");
-//        FireBase fireBase = new FireBase();
-//        fireBase.writePharmacistToFireBase(pharmacist);
 
-        new FireBase().writePharmacistToFireBase(new Pharmacist("GMB","0655166888","TLG56995fgfg62"));
+        FireBase fireBase = new FireBase();
+        ArrayList<Patient> patientsDataBase = fireBase.readPatients();
+
+        for (int i=0;i<patientsDataBase.size();i++){
+            System.out.print("Patient ID: ");
+            System.out.print(patientsDataBase.get(i).getId());
+
+            System.out.print(", Patient Name: ");
+            System.out.println(patientsDataBase.get(i).getFullName());
+        }
     }
 }

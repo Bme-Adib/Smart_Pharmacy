@@ -5,6 +5,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
 public class Patient {
+    public static final String MALE = "Male";
+    public static final String FEMALE = "Female";
     //System Information
     private String id;
     private String dateCreated;

@@ -3,6 +3,8 @@ package smart.BackEnd;
 import java.util.Random;
 
 public class Doctor {
+    public static final String MALE = "Male";
+    public static final String FEMALE = "Female";
     //System Information
     private String id;
     private String dateCreated;
