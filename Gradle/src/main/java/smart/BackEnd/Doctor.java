@@ -28,7 +28,8 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(String firstName, String lastName, String gender, int day, int month, int year, String specialty, String mobileNumber, String clinicPhoneNumber, String email, String licenseId) {
+    public Doctor(String firstName, String lastName, String gender, int day, int month, int year, String specialty,
+                  String mobileNumber, String clinicPhoneNumber, String email, String licenseId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;

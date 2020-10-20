@@ -4,7 +4,7 @@ import smart.FireStore.FireBase;
 
 public class Test1 {
     public static void main(String[] args) {
-        Pharmacist pharmacist = new Pharmacist("GMB","0655166888","TLG5699562");
+        Pharmacist pharmacist = new Pharmacist("GMB","0655166888","TLG5699568");
 
         Doctor doctor = new Doctor("Dr. John","Doe",Doctor.MALE,15,7,1956,
                 "General Practice","0115445151","5565521","johndoe@email.com","L88955623");

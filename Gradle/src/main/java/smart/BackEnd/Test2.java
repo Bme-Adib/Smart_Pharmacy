@@ -34,14 +34,14 @@ public class Test2 {
         System.out.println();
 
 
-        System.out.println("Farmacies List");
+        System.out.println("Pharmacies List");
         ArrayList<Pharmacist> pharmacistsDataBase = fireBase.readPharmacist();
-        for (int i=0;i<pharmacistsDataBase.size();i++){
+        for (Pharmacist pharmacist : pharmacistsDataBase) {
             System.out.print("Pharmacy ID: ");
-            System.out.print(pharmacistsDataBase.get(i).getId());
+            System.out.print(pharmacist.getId());
 
             System.out.print(", Pharmacy Name: ");
-            System.out.println(pharmacistsDataBase.get(i).getPharmacyName());
+            System.out.println(pharmacist.getPharmacyName());
         }
     }
 
