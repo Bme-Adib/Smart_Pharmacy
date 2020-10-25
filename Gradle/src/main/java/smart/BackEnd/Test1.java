@@ -5,9 +5,7 @@ import smart.FireStore.FireBase;
 public class Test1 {
     public static void main(String[] args) {
 
-//        Doctor doctor = new Doctor("Dr. John","Doe",Doctor.MALE,15,7,1956,
-//                "General Practice","0115445151","5565521","johndoe@email.com","L88955623");
-//        doctor.setPassword("aishaBootyIsAmazing");
+
 
         FireBase fireBase = new FireBase();
 
