@@ -4,19 +4,25 @@ import smart.FireStore.FireBase;
 
 public class Test1 {
     public static void main(String[] args) {
-        Pharmacist pharmacist = new Pharmacist("GMB","0655166888","TLG5699568");
+//        Pharmacy pharmacy = new Pharmacy("GMB","0655166888","TLG5699568");
+//        pharmacy.setPassword("aishaRocks");
+
+//        Doctor doctor = new Doctor("Dr. John","Doe",Doctor.MALE,15,7,1956,
+//                "General Practice","0115445151","5565521","johndoe@email.com","L88955623");
+//        doctor.setPassword("aishaBootyIsAmazing");
+
+        FireBase fireBase = new FireBase();
 
         Doctor doctor = new Doctor("Dr. John","Doe",Doctor.MALE,15,7,1956,
                 "General Practice","0115445151","5565521","johndoe@email.com","L88955623");
-
-        Patient patient = new Patient("Richard","Bong",Patient.MALE,6,7,1993,
-                "adib@email.com","+601121495594");
-
-        FireBase fireBase = new FireBase();
-        fireBase.writePatientToFireBase(patient);
+        doctor.passwordSet("aishaBootyIsAmazing");
         fireBase.writeDoctorToFireBase(doctor);
-        fireBase.writePharmacistToFireBase(pharmacist);
 
+
+        doctor = new Doctor("Adib","Ghannam",Doctor.MALE,5,6,1993,
+                "General Practice","011542345151","552365521","adib@email.com","L88955623");
+        doctor.passwordSet("aishaboobiesareamazing");
+        fireBase.writeDoctorToFireBase(doctor);
 
 
 

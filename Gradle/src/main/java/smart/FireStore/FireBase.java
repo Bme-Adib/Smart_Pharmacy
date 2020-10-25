@@ -72,7 +72,7 @@ public class FireBase {
         }
     }
 
-    public void writePharmacistToFireBase(Pharmacist pharmacist) {
+    public void writePharmacistToFireBase(Pharmacy pharmacist) {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(PHARMACIST).document(pharmacist.getId());
         ApiFuture<WriteResult> result = docRef.set(pharmacist);
@@ -129,8 +129,8 @@ public class FireBase {
         return doctorsDB;
     }
 
-    public ArrayList<Pharmacist> readPharmacist() {
-        ArrayList<Pharmacist> pharmacistDB = new ArrayList<>();
+    public ArrayList<Pharmacy> readPharmacist() {
+        ArrayList<Pharmacy> pharmacistDB = new ArrayList<>();
 
         Firestore db = FirestoreClient.getFirestore();
         CollectionReference collectionReference = db.collection(PHARMACIST);
@@ -143,7 +143,7 @@ public class FireBase {
             querySnapshot = query.get();
             List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
             for (QueryDocumentSnapshot document : documents) {
-                pharmacistDB.add(document.toObject(Pharmacist.class));
+                pharmacistDB.add(document.toObject(Pharmacy.class));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,7 +152,7 @@ public class FireBase {
         return pharmacistDB;
     }
 
-    public void writeSessionToPatient(String patientID, Session session) {
+    public void writeSessionToPatient(String patientID, PtSession session) {
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(PATIENTS).document(patientID).collection(SESSION).document(session.getSessionID());
         ApiFuture<WriteResult> result = docRef.set(session);

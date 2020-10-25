@@ -49,6 +49,10 @@ public class Doctor {
         id = "SPDR" + String.valueOf(year).substring(2) + String.format("%02d", month) + String.format("%02d", day) + new Random().nextInt(10000);
     }
 
+    public void passwordSet(String password){
+        this.password = new Hashing().SHA256(password);
+    }
+
 
 //setters and getters
 
