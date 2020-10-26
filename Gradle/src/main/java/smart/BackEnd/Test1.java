@@ -5,8 +5,6 @@ import smart.FireStore.FireBase;
 public class Test1 {
     public static void main(String[] args) {
 
-
-
         FireBase fireBase = new FireBase();
 
         Doctor doctor = new Doctor("Dr. John","Doe",Doctor.MALE,15,7,1956,
