@@ -35,7 +35,7 @@ public class Test2 {
 
 
         System.out.println("Pharmacies List");
-        ArrayList<Pharmacy> pharmacistsDataBase = fireBase.readPharmacist();
+        ArrayList<Pharmacy> pharmacistsDataBase = fireBase.readPharmacy();
         for (Pharmacy pharmacist : pharmacistsDataBase) {
             System.out.print("Pharmacy ID: ");
             System.out.print(pharmacist.getId());

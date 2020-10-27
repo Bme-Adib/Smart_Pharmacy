@@ -20,7 +20,7 @@ public class FireBase {
     public static final String DOCTORS = "Doctors";
     public static final String SESSION = "Session";
     public static final String DRUGS = "Drugs";
-    public static final String PHARMACIST = "Pharmacist";
+    public static final String PHARMACY = "Pharmacy";
 
 
     public FireBase() {
@@ -72,10 +72,10 @@ public class FireBase {
         }
     }
 
-    public void writePharmacistToFireBase(Pharmacy pharmacist) {
+    public void writePharmacyToFireBase(Pharmacy pharmacy) {
         Firestore db = FirestoreClient.getFirestore();
-        DocumentReference docRef = db.collection(PHARMACIST).document(pharmacist.getId());
-        ApiFuture<WriteResult> result = docRef.set(pharmacist);
+        DocumentReference docRef = db.collection(PHARMACY).document(pharmacy.getId());
+        ApiFuture<WriteResult> result = docRef.set(pharmacy);
 
         try {
             System.out.println("Update time : " + result.get().getUpdateTime());
@@ -129,11 +129,11 @@ public class FireBase {
         return doctorsDB;
     }
 
-    public ArrayList<Pharmacy> readPharmacist() {
-        ArrayList<Pharmacy> pharmacistDB = new ArrayList<>();
+    public ArrayList<Pharmacy> readPharmacy() {
+        ArrayList<Pharmacy> pharmaciesDB = new ArrayList<>();
 
         Firestore db = FirestoreClient.getFirestore();
-        CollectionReference collectionReference = db.collection(PHARMACIST);
+        CollectionReference collectionReference = db.collection(PHARMACY);
 
         ApiFuture<QuerySnapshot> query = collectionReference.get();
 
@@ -143,13 +143,13 @@ public class FireBase {
             querySnapshot = query.get();
             List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
             for (QueryDocumentSnapshot document : documents) {
-                pharmacistDB.add(document.toObject(Pharmacy.class));
+                pharmaciesDB.add(document.toObject(Pharmacy.class));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return pharmacistDB;
+        return pharmaciesDB;
     }
 
     public void writeSessionToPatient(String patientID, PtSession session) {
@@ -182,5 +182,75 @@ public class FireBase {
             ;
         }
 
+    }
+
+    public boolean checkDoctor(String id) {
+        boolean found = false;
+        if (!id.isEmpty()) {
+            Firestore db = FirestoreClient.getFirestore();
+            CollectionReference collectionReference = db.collection(DOCTORS);
+            ApiFuture<QuerySnapshot> query = collectionReference.get();
+            QuerySnapshot querySnapshot = null;
+            try {
+                querySnapshot = query.get();
+                List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+                for (QueryDocumentSnapshot document : documents) {
+                    if (document.getId().equals(id)) found = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return found;
+    }
+
+    public Doctor readDoctor(String id) {
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference collectionReference = db.collection(DOCTORS).document(id);
+        ApiFuture<DocumentSnapshot> query = collectionReference.get();
+        DocumentSnapshot querySnapshot = null;
+        Doctor doctor = new Doctor();
+        try {
+            querySnapshot = query.get();
+            doctor = querySnapshot.toObject(Doctor.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return doctor;
+    }
+
+    public boolean checkPharmacy(String id) {
+        boolean found = false;
+        if (!id.isEmpty()) {
+            Firestore db = FirestoreClient.getFirestore();
+            CollectionReference collectionReference = db.collection(PHARMACY);
+            ApiFuture<QuerySnapshot> query = collectionReference.get();
+            QuerySnapshot querySnapshot = null;
+            try {
+                querySnapshot = query.get();
+                List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+                for (QueryDocumentSnapshot document : documents) {
+                    if (document.getId().equals(id)) found = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return found;
+    }
+
+    public Pharmacy readPharmacy(String id) {
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference collectionReference = db.collection(PHARMACY).document(id);
+        ApiFuture<DocumentSnapshot> query = collectionReference.get();
+        DocumentSnapshot querySnapshot = null;
+        Pharmacy pharmacy = new Pharmacy();
+        try {
+            querySnapshot = query.get();
+            pharmacy = querySnapshot.toObject(Pharmacy.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pharmacy;
     }
 }
