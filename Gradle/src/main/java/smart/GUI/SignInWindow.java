@@ -1,6 +1,8 @@
 package smart.GUI;
 
 import smart.BackEnd.Doctor;
+import smart.BackEnd.Hashing;
+import smart.BackEnd.Pharmacy;
 import smart.FireStore.FireBase;
 
 import javax.swing.*;
@@ -12,20 +14,7 @@ public class SignInWindow {
 
     private int windowWidth;
     private int windowHeight;
-
     private FireBase fireBase;
-    private JFrame windowSignIn;
-    private Container container;
-
-    private JLabel jTile;
-    private JLabel logo;
-    private Image logoImage;
-
-    private JLabel jID;
-    private JTextField id;
-    private JLabel jPassword;
-    private JPasswordField password;
-    private JButton signIn;
 
 
     public void runSignIn(FireBase fireBase) {
@@ -51,48 +40,53 @@ public class SignInWindow {
     private void singInMethod() {
         /*
         1- Check if Doctor or Pharmacy          ✓
-        2- Check if user Exist
-        3- if yes get
+        2- Check if user Exist                  ✓
+        3- if yes get                           ✓
         4- Check if Password Matches the ID
             The Methode:
-            1- read id
-            2- check for 3rd and 4th letters
-            3- if(DR) then doctor and if (ph) then pharmacy
+            1- read id                                          ✓
+            2- check for 3rd and 4th letters                    ✓
+            3- if(DR) then doctor and if (ph) then pharmacy     ✓
          */
-        String idByUser = id.getText().toUpperCase();
+        String errorMessage = "ID or Password is wrong";
+        String idByUser = id.getText();
+        String temp = idByUser.substring(0, 4).toUpperCase();
+        idByUser = temp + idByUser.substring(4);
+
         String idType;
-        if (idByUser.length()>4){
-            idType = idByUser.substring(2,4);
-        }else{
-            idType = "AISHA AL HARWEEL";
+        if (idByUser.length() > 4) {
+            idType = idByUser.substring(2, 4);
+        } else {
+            idType = "AISHA ALHARWEEL";
         }
 
-        System.out.println(password.getPassword());
-
-        if (idType.equals("DR")){
-            if (fireBase.checkDoctor(idByUser)){
+        if (idType.equals("DR")) {
+            if (fireBase.checkDoctor(idByUser)) {
                 Doctor doctor = fireBase.readDoctor(idByUser);
-
-
-
-
-            }else {
-                JOptionPane.showMessageDialog(null, "Doctor Not Found", "Error", JOptionPane.ERROR_MESSAGE);
+                if (new Hashing().SHA256(String.valueOf(password.getPassword())).equals(doctor.getPassword())) {
+                    startNewWindow();
+                } else {
+                    JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
             }
 
-        }else if(idType.equals("PH")){
-            if (fireBase.checkPharmacy(idByUser)){
-                System.out.println("Pharmacy Found");
-            }else {
-                JOptionPane.showMessageDialog(null, "Pharmacy Not Found", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (idType.equals("PH")) {
+            if (fireBase.checkPharmacy(idByUser)) {
+                Pharmacy pharmacy = fireBase.readPharmacy(idByUser);
+                if (new Hashing().SHA256(String.valueOf(password.getPassword())).equals(pharmacy.getPassword())) {
+                    startNewWindow();
+                } else {
+                    JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }else{
-            JOptionPane.showMessageDialog(null, "Please Check the ID", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-
     }
-
 
     private void setUpAssignment() {
         jTile = new JLabel("Smart Pharmacy");
@@ -180,4 +174,19 @@ public class SignInWindow {
         container.setBackground(PV.APPLICATION_BACKGROUND);
         container.setLayout(null);
     }
+
+    private void startNewWindow() {
+        System.out.println("New Window Started");
+    }
+
+    private JFrame windowSignIn;
+    private Container container;
+    private JLabel jTile;
+    private JLabel logo;
+    private Image logoImage;
+    private JLabel jID;
+    private JTextField id;
+    private JLabel jPassword;
+    private JPasswordField password;
+    private JButton signIn;
 }

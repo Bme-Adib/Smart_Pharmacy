@@ -7,16 +7,20 @@ public class Test1 {
 
         FireBase fireBase = new FireBase();
 
-        Doctor doctor = new Doctor("Dr. John","Doe",Doctor.MALE,15,7,1956,
-                "General Practice","0115445151","5565521","johndoe@email.com","L88955623");
-        doctor.passwordSet("aishaBootyIsAmazing");
-        fireBase.writeDoctorToFireBase(doctor);
+//        Doctor doctor = new Doctor("Dr. John","Doe",Doctor.MALE,15,7,1956,
+//                "General Practice","0115445151","5565521","johndoe@email.com","L88955623");
+//        doctor.passwordSet("aishaBootyIsAmazing");
+//        fireBase.writeDoctorToFireBase(doctor);
+//
+//
+//        doctor = new Doctor("Adib","Ghannam",Doctor.MALE,5,6,1993,
+//                "General Practice","011542345151","552365521","adib@email.com","L88955623");
+//        doctor.passwordSet("aishaboobiesareamazing");
+//        fireBase.writeDoctorToFireBase(doctor);
 
-
-        doctor = new Doctor("Adib","Ghannam",Doctor.MALE,5,6,1993,
-                "General Practice","011542345151","552365521","adib@email.com","L88955623");
-        doctor.passwordSet("aishaboobiesareamazing");
-        fireBase.writeDoctorToFireBase(doctor);
+        Pharmacy pharmacy = new Pharmacy("Alma7aba","06540165","LM5ty6231");
+        pharmacy.passwordset("aishaIsAmazing");
+        fireBase.writePharmacyToFireBase(pharmacy);
 
 
 
