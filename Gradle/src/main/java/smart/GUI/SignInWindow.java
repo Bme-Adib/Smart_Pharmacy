@@ -15,6 +15,23 @@ public class SignInWindow {
     private int windowWidth;
     private int windowHeight;
     private FireBase fireBase;
+    private Pharmacy pharmacy;
+    private Doctor doctor;
+    private String idType;
+    //
+    private JFrame windowSignIn;
+    private Container container;
+    private JLabel jTile;
+    private JLabel logo;
+    private Image logoImage;
+    private JLabel jID;
+    private JTextField id;
+    private JLabel jPassword;
+    private JPasswordField password;
+    private JButton signIn;
+    private JButton signUp;
+
+    private JLabel jSignature;
 
 
     public void runSignIn(FireBase fireBase) {
@@ -35,6 +52,17 @@ public class SignInWindow {
                 singInMethod();
             }
         });
+        signUp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                signUpMethod();
+            }
+        });
+    }
+
+    private void signUpMethod() {
+        windowSignIn.dispose();
+        new SignUpWindow().runSignUp(fireBase);
     }
 
     private void singInMethod() {
@@ -53,16 +81,16 @@ public class SignInWindow {
         String temp = idByUser.substring(0, 4).toUpperCase();
         idByUser = temp + idByUser.substring(4);
 
-        String idType;
+
         if (idByUser.length() > 4) {
             idType = idByUser.substring(2, 4);
         } else {
             idType = "AISHA ALHARWEEL";
         }
-
         if (idType.equals("DR")) {
             if (fireBase.checkDoctor(idByUser)) {
-                Doctor doctor = fireBase.readDoctor(idByUser);
+
+                doctor = fireBase.readDoctor(idByUser);
                 if (new Hashing().SHA256(String.valueOf(password.getPassword())).equals(doctor.getPassword())) {
                     startNewWindow();
                 } else {
@@ -74,7 +102,8 @@ public class SignInWindow {
 
         } else if (idType.equals("PH")) {
             if (fireBase.checkPharmacy(idByUser)) {
-                Pharmacy pharmacy = fireBase.readPharmacy(idByUser);
+
+                pharmacy = fireBase.readPharmacy(idByUser);
                 if (new Hashing().SHA256(String.valueOf(password.getPassword())).equals(pharmacy.getPassword())) {
                     startNewWindow();
                 } else {
@@ -124,6 +153,15 @@ public class SignInWindow {
         signIn.setForeground(PV.BLACK);
         container.add(signIn);
 
+        signUp = new JButton("Sign Up");
+        signUp.setFont(PV.HEADING2);
+        signUp.setForeground(PV.BLACK);
+        container.add(signUp);
+
+        jSignature = new JLabel("By: Aisha AlHarweel (aishaalharweel@gmail.com)");
+        jSignature.setFont(PV.NORMAL);
+        jSignature.setForeground(PV.BLACK);
+        container.add(jSignature);
 
     }
 
@@ -158,10 +196,16 @@ public class SignInWindow {
         yStep += jID.getPreferredSize().height + lineSpacer;
         signIn.setBounds((logo_dim - signIn.getPreferredSize().width) / 2 + 300, yStep, signIn.getPreferredSize().width, signIn.getPreferredSize().height);
 
+        //Line 6
+        yStep += signIn.getPreferredSize().height + lineSpacer;
+        signUp.setBounds((logo_dim - signUp.getPreferredSize().width) / 2 + 300, yStep, signUp.getPreferredSize().width, signUp.getPreferredSize().height);
+
+        ps = jSignature.getPreferredSize();
+        jSignature.setBounds(windowWidth-ps.width-20,540,ps.width,ps.height);
     }
 
     private void setUpWindow() {
-        windowSignIn = new JFrame("Smart Pharmacy Desktop App");
+        windowSignIn = new JFrame(PV.APP_TITLE);
         windowWidth = PV.WINDOW_WIDTH;
         windowHeight = PV.WINDOW_HEIGHT;
         windowSignIn.setSize(windowWidth, windowHeight);
@@ -176,17 +220,10 @@ public class SignInWindow {
     }
 
     private void startNewWindow() {
-        System.out.println("New Window Started");
+        if (idType.equals("DR")) {
+            System.out.println("Open Doctor Window");
+        } else if (idType.equals("PH")) {
+            System.out.println("Open Pharmacy Window");
+        }
     }
-
-    private JFrame windowSignIn;
-    private Container container;
-    private JLabel jTile;
-    private JLabel logo;
-    private Image logoImage;
-    private JLabel jID;
-    private JTextField id;
-    private JLabel jPassword;
-    private JPasswordField password;
-    private JButton signIn;
 }

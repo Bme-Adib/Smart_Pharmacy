@@ -3,6 +3,7 @@ package smart.GUI;
 import java.awt.*;
 
 public class PV {
+    public static final String APP_TITLE="Smart Pharmacy Desktop App";
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 600;
     public static final Color APPLICATION_BACKGROUND = Color.WHITE;
