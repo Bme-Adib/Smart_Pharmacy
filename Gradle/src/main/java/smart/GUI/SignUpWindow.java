@@ -48,6 +48,42 @@ public class SignUpWindow {
     private JPasswordField doctor_password;
 
 
+    // Patient Shit
+    private JLabel patientFixed;
+    private JLabel patient_jFirstName;
+    private JTextField patient_firstName;
+    private JLabel patient_jLastName;
+    private JTextField patient_lastName;
+    private JLabel patient_jGender;
+    private JTextField patient_gender;
+    private JLabel patient_jDateOfBirth;
+    private JTextField patient_day;
+    private JTextField patient_month;
+    private JTextField patient_year;
+    private JLabel patient_jMobileNumber;
+    private JTextField patient_mobileNumber;
+    private JLabel patient_jEmail;
+    private JTextField patient_email;
+    private JLabel patient_jID;
+    private JTextField patient_ID;
+    private JLabel patient_jPassword;
+    private JPasswordField patient_password;
+
+
+    // Pharmacy Shit
+    private JLabel pharmacyFixed;
+    private JLabel pharmacy_jName;
+    private JTextField pharmacy_Name;
+    private JLabel pharmacy_jPhoneNumber;
+    private JTextField pharmacy_phoneNumber;
+    private JLabel pharmacy_jID;
+    private JTextField pharmacy_ID;
+    private JLabel pharmacy_jPassword;
+    private JPasswordField pharmacy_password;
+
+
+
+
     public void runSignUp(FireBase fireBase) {
         this.fireBase = fireBase;
         setUpWindow();
@@ -65,26 +101,18 @@ public class SignUpWindow {
 
     private void setUpAssignment() {
 
+
+      //Doctor Shit
+        doctorType = new JButton("Doctor");
+        doctorType.setFont(PV.HEADING2);
+        doctorType.setForeground(PV.BLACK);
+        container.add(doctorType);
+
         doctorFixed = new JLabel("Create New Doctor Account:");
         doctorFixed.setFont(PV.HEADING1);
         doctorFixed.setForeground(PV.BLACK);
         container.add(doctorFixed);
 
-        pharmacyType = new JButton("Pharmacy");
-        pharmacyType.setFont(PV.HEADING2);
-        pharmacyType.setForeground(PV.BLACK);
-        container.add(pharmacyType);
-
-        patientType = new JButton("Patient");
-        patientType.setFont(PV.HEADING2);
-        patientType.setForeground(PV.BLACK);
-        container.add(patientType);
-
-        //Doctor Shit
-        doctorType = new JButton("Doctor");
-        doctorType.setFont(PV.HEADING2);
-        doctorType.setForeground(PV.BLACK);
-        container.add(doctorType);
 
 
         doctor_jFirstName = new JLabel("First Name");
@@ -198,6 +226,177 @@ public class SignUpWindow {
         doctor_password.setFont(PV.NORMAL);
         doctor_password.setForeground(PV.BLACK);
         container.add(doctor_password);
+
+
+        patientFixed = new JLabel("Create New Patient Account:");
+        patientFixed.setFont(PV.HEADING1);
+        patientFixed.setForeground(PV.BLACK);
+        container.add(patientFixed);
+
+
+
+
+
+        //Patient  Shit
+        patientType = new JButton("Patient");
+        patientType.setFont(PV.HEADING2);
+        patientType.setForeground(PV.BLACK);
+        container.add(patientType);
+
+
+        patientFixed = new JLabel("Create New Patient Account:");
+        patientFixed.setFont(PV.HEADING1);
+        patientFixed.setForeground(PV.BLACK);
+        container.add(patientFixed);
+
+
+        patient_jFirstName = new JLabel("First Name");
+        patient_jFirstName.setFont(PV.NORMALBOLD);
+        patient_jFirstName.setForeground(PV.BLACK);
+        container.add(patient_jFirstName);
+
+        patient_firstName = new JTextField("Adib Ghannam");
+        patient_firstName.setFont(PV.NORMAL);
+        patient_firstName.setForeground(PV.BLACK);
+        container.add(patient_firstName);
+
+        patient_jLastName = new JLabel("Last Name");
+        patient_jLastName.setFont(PV.NORMALBOLD);
+        patient_jLastName.setForeground(PV.BLACK);
+        container.add(patient_jLastName);
+
+        patient_lastName = new JTextField();
+        patient_lastName.setFont(PV.NORMAL);
+        patient_lastName.setForeground(PV.BLACK);
+        container.add(patient_lastName);
+
+        patient_jGender = new JLabel("Gender");
+        patient_jGender.setFont(PV.NORMALBOLD);
+        patient_jGender.setForeground(PV.BLACK);
+        container.add(patient_jGender);
+
+        patient_gender = new JTextField();
+        patient_gender.setFont(PV.NORMAL);
+        patient_gender.setForeground(PV.BLACK);
+        container.add(patient_gender);
+
+        patient_jDateOfBirth = new JLabel("Birth Date");
+        patient_jDateOfBirth.setFont(PV.NORMALBOLD);
+        patient_jDateOfBirth.setForeground(PV.BLACK);
+        container.add(patient_jDateOfBirth);
+
+        patient_day = new JTextField();
+        patient_day.setFont(PV.NORMAL);
+        patient_day.setForeground(PV.BLACK);
+        container.add(patient_day);
+
+
+        patient_month = new JTextField();
+        patient_month.setFont(PV.NORMAL);
+        patient_month.setForeground(PV.BLACK);
+        container.add(patient_month);
+
+
+        patient_year = new JTextField();
+        patient_year.setFont(PV.NORMAL);
+        patient_year.setForeground(PV.BLACK);
+        container.add(patient_year);
+
+
+        patient_jMobileNumber = new JLabel("Mobile No.");
+        patient_jMobileNumber.setFont(PV.NORMALBOLD);
+        patient_jMobileNumber.setForeground(PV.BLACK);
+        container.add(patient_jMobileNumber);
+
+        patient_mobileNumber = new JTextField();
+        patient_mobileNumber.setFont(PV.NORMAL);
+        patient_mobileNumber.setForeground(PV.BLACK);
+        container.add(patient_mobileNumber);
+
+
+        patient_jEmail = new JLabel("E-Mail");
+        patient_jEmail.setFont(PV.NORMALBOLD);
+        patient_jEmail.setForeground(PV.BLACK);
+        container.add(patient_jEmail);
+
+        patient_email = new JTextField();
+        patient_email.setFont(PV.NORMAL);
+        patient_email.setForeground(PV.BLACK);
+        container.add(patient_email);
+
+        patient_jID = new JLabel("ID No.");
+        patient_jID.setFont(PV.NORMALBOLD);
+        patient_jID.setForeground(PV.BLACK);
+        container.add(patient_jID);
+
+        patient_ID = new JTextField();
+        patient_ID.setFont(PV.NORMAL);
+        patient_ID.setForeground(PV.BLACK);
+        container.add(patient_ID);
+
+        patient_jPassword = new JLabel("Password");
+        patient_jPassword.setFont(PV.NORMALBOLD);
+        patient_jPassword.setForeground(PV.BLACK);
+        container.add(patient_jPassword);
+
+        patient_password = new JPasswordField();
+        patient_password.setFont(PV.NORMAL);
+        patient_password.setForeground(PV.BLACK);
+        container.add(patient_password);
+
+
+
+        //Pharmacy  Shit
+        pharmacyType = new JButton("Pharmacy");
+        pharmacyType.setFont(PV.HEADING2);
+        pharmacyType.setForeground(PV.BLACK);
+        container.add(pharmacyType);
+
+        pharmacyFixed = new JLabel("Create New Pharmacy Account:");
+        pharmacyFixed.setFont(PV.HEADING1);
+        pharmacyFixed.setForeground(PV.BLACK);
+        container.add(pharmacyFixed);
+
+        pharmacy_jName = new JLabel("Pharmacy Name");
+        pharmacy_jName.setFont(PV.NORMALBOLD);
+        pharmacy_jName.setForeground(PV.BLACK);
+        container.add(pharmacy_jName);
+
+        pharmacy_Name = new JTextField("Adib Ghannam");
+        pharmacy_Name.setFont(PV.NORMAL);
+        pharmacy_Name.setForeground(PV.BLACK);
+        container.add(pharmacy_Name);
+
+
+        pharmacy_jPhoneNumber = new JLabel("Pharmacy Phone No.");
+        pharmacy_jPhoneNumber.setFont(PV.NORMALBOLD);
+        pharmacy_jPhoneNumber.setForeground(PV.BLACK);
+        container.add(pharmacy_jPhoneNumber);
+
+        pharmacy_phoneNumber = new JTextField();
+        pharmacy_phoneNumber.setFont(PV.NORMAL);
+        pharmacy_phoneNumber.setForeground(PV.BLACK);
+        container.add(pharmacy_phoneNumber);
+
+        pharmacy_jID = new JLabel("License No.");
+        pharmacy_jID.setFont(PV.NORMALBOLD);
+        pharmacy_jID.setForeground(PV.BLACK);
+        container.add(pharmacy_jID);
+
+        pharmacy_ID = new JTextField();
+        pharmacy_ID.setFont(PV.NORMAL);
+        pharmacy_ID.setForeground(PV.BLACK);
+        container.add(pharmacy_ID);
+
+        pharmacy_jPassword = new JLabel("Password");
+        pharmacy_jPassword.setFont(PV.NORMALBOLD);
+        pharmacy_jPassword.setForeground(PV.BLACK);
+        container.add(pharmacy_jPassword);
+
+        pharmacy_password = new JPasswordField();
+        pharmacy_password.setFont(PV.NORMAL);
+        pharmacy_password.setForeground(PV.BLACK);
+        container.add(pharmacy_password);
     }
 
     private void setPlacement() {

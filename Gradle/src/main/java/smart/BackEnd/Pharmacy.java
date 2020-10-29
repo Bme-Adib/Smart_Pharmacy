@@ -8,7 +8,6 @@ public class Pharmacy {
     private String pharmacyName;
     private String phoneNumber;
     private String licenseId;
-
     private String password;
 
 
