@@ -29,6 +29,13 @@ public class Pharmacy {
         this.password = new Hashing().SHA256(password);
     }
 
+    public void continueCreation(){
+        Time_Stamp time_stamp = new Time_Stamp();
+        dateCreated = time_stamp.getCreationTime();
+
+        id = "SPPH" + licenseId;
+    }
+
 
 
 //setters and getters

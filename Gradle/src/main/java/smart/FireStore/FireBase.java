@@ -72,16 +72,19 @@ public class FireBase {
         }
     }
 
-    public void writePharmacyToFireBase(Pharmacy pharmacy) {
+    public boolean writePharmacyToFireBase(Pharmacy pharmacy) {
+        boolean success = false;
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(PHARMACY).document(pharmacy.getId());
         ApiFuture<WriteResult> result = docRef.set(pharmacy);
 
         try {
             System.out.println("Update time : " + result.get().getUpdateTime());
+            success=true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return success;
     }
 
     public ArrayList<Patient> readPatients() {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.id="Gradle:main" external.linked.project.path="$MODULE_DIR$/../../Gradle" external.root.project.path="$MODULE_DIR$/../../Gradle" external.system.id="GRADLE" external.system.module.group="smart" external.system.module.type="sourceSet" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+  <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="smart" externalSystemModuleType="sourceSet" externalSystemModuleVersion="1.0-SNAPSHOT" linkedProjectId="Gradle:main" linkedProjectPath="$MODULE_DIR$/../../Gradle" rootProjectPath="$MODULE_DIR$/../../Gradle" />
   <component name="NewModuleRootManager">
     <output url="file://$MODULE_DIR$/../../Gradle/build/classes/java/main" />
     <exclude-output />
@@ -7,9 +8,11 @@
       <sourceFolder url="file://$MODULE_DIR$/../../Gradle/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../Gradle/src/main/resources" type="java-resource" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="11 (2)" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Gradle: com.sun.mail:javax.mail:1.6.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-admin:7.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.api-client:google-api-client-gson:1.30.10" level="project" />
     <orderEntry type="library" name="Gradle: com.google.cloud:google-cloud-storage:1.110.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.api-client:google-api-client:1.30.10" level="project" />
