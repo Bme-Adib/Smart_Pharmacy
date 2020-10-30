@@ -3,6 +3,7 @@ package smart.GUI;
 import smart.BackEnd.Doctor;
 import smart.BackEnd.Patient;
 import smart.BackEnd.Pharmacy;
+import smart.BackEnd.Time_Stamp;
 import smart.FireStore.FireBase;
 
 import javax.swing.*;
@@ -237,8 +238,65 @@ public class SignUpWindow {
         if (doctor_day.getText().trim().isEmpty()) {
             error += "Please enter day\n";
         } else {
-            doctor.setDay(Integer.parseInt(doctor_day.getText().trim()));
+            switch (Integer.parseInt(doctor_month.getText().trim())) {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    if (Integer.parseInt(doctor_day.getText().trim()) > 0 && Integer.parseInt(doctor_day.getText().trim()) < 32) {
+                        doctor.setDay(Integer.parseInt(doctor_day.getText().trim()));
+                    } else {
+                        error += "Invalid day\n";
+                    }
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    if (Integer.parseInt(doctor_day.getText().trim()) > 0 && Integer.parseInt(doctor_day.getText().trim()) < 31) {
+                        doctor.setDay(Integer.parseInt(doctor_day.getText().trim()));
+                    } else {
+                        error += "Invalid day\n";
+                    }
+                    break;
+                case 2:
+                    if (Integer.parseInt(doctor_day.getText().trim()) > 0 && Integer.parseInt(doctor_day.getText().trim()) < 30 &&
+                            Integer.parseInt(doctor_year.getText().trim()) % 4 == 0) {
+                        doctor.setDay(Integer.parseInt(doctor_day.getText().trim()));
+                    } else if (Integer.parseInt(doctor_day.getText().trim()) > 0 && Integer.parseInt(doctor_day.getText().trim()) < 29 &&
+                            Integer.parseInt(doctor_year.getText().trim()) % 4 != 0) {
+                        doctor.setDay(Integer.parseInt(doctor_day.getText().trim()));
+                    } else {
+                        error += "Invalid day\n";
+                    }
+                    break;
+            }
         }
+
+        if (doctor_month.getText().trim().isEmpty()) {
+            error += "Please enter month\n";
+        } else {
+            if (Integer.parseInt(doctor_month.getText().trim()) > 0 && Integer.parseInt(doctor_month.getText().trim()) < 13) {
+                doctor.setMonth(Integer.parseInt(doctor_month.getText().trim()));
+            } else {
+                error += "Invalid month\n";
+            }
+        }
+
+        if (doctor_year.getText().trim().isEmpty()) {
+            error += "Please enter year\n";
+        } else {
+            if (Integer.parseInt(doctor_year.getText().trim()) > 1900 && Integer.parseInt(doctor_year.getText().trim()) < new Time_Stamp().getYear()) {
+                doctor.setMonth(Integer.parseInt(doctor_year.getText().trim()));
+            } else {
+                error += "Invalid Year\n";
+            }
+        }
+
+
 
 
         if (doctor_password.getPassword().length >= 8) {
@@ -255,11 +313,12 @@ public class SignUpWindow {
         if (error.isEmpty()) {
 //            if (!fireBase.checkDoctor("SPDR" + doctor_email.getText().trim())) {
             if (true) {
-                doctor.continueCreationDr();
-                if (fireBase.writeDoctorToFireBase(doctor)) {
-                    JOptionPane.showMessageDialog(null, "Doctor Created Successfully\nDoctor ID: " + doctor.getId() +
-                            "\n( Please save this ID and use it to sign in )\n", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
-                }
+//                doctor.continueCreationDr();
+//                if (fireBase.writeDoctorToFireBase(doctor)) {
+//                    JOptionPane.showMessageDialog(null, "Doctor Created Successfully\nDoctor ID: " + doctor.getId() +
+//                            "\n( Please save this ID and use it to sign in )\n", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+//                }
+                System.out.println("Sign Up Successful");
             } else {
                 JOptionPane.showMessageDialog(null, "This Doctor is already signed up with\n the ID: SPDR" + doctor_licenceID.getText().trim(), "Error", JOptionPane.ERROR_MESSAGE);
             }

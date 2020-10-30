@@ -25,6 +25,14 @@ public class Time_Stamp {
         return TS;
     }
 
+    public int getYear() {
+        Calendar cal = Calendar.getInstance();
+        Date date = cal.getTime();
+        DateFormat dateFormat = new SimpleDateFormat("YYYY");
+        int year = Integer.parseInt(dateFormat.format(date));
+        return year;
+    }
+
 
 
 }
