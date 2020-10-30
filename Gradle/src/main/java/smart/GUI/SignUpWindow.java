@@ -163,16 +163,132 @@ public class SignUpWindow {
     }
 
     private void signupPatient() {
-    }
-
-    private void signUpPharmacy() {
         String error = "";
 
-        if (pharmacy_name.getText().trim().isEmpty()) {
-            error += "Please enter pharmacy Name\n";
+        if (patient_firstName.getText().trim().isEmpty()) {
+            error += "Please enter First Name\n";
         } else {
-            pharmacy.setPharmacyName(pharmacy_name.getText().trim());
+            patient.setFirstName(patient_firstName.getText().trim());
         }
+
+        if (patient_lastName.getText().trim().isEmpty()) {
+            error += "Please enter Last Name\n";
+        } else {
+            patient.setLastName(patient_lastName.getText().trim());
+        }
+
+        if (patient_gender.getText().trim().isEmpty()) {
+            error += "Please enter Gender\n";
+        } else {
+            patient.setGender(patient_gender.getText().trim());
+        }
+
+        if (patient_day.getText().trim().isEmpty()) {
+            error += "Please enter day\n";
+        } else {
+            switch (Integer.parseInt(patient_month.getText().trim())) {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12:
+                    if (Integer.parseInt(patient_day.getText().trim()) > 0 && Integer.parseInt(patient_day.getText().trim()) < 32) {
+                        patient.setDay(Integer.parseInt(patient_day.getText().trim()));
+                    } else {
+                        error += "Invalid day\n";
+                    }
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    if (Integer.parseInt(patient_day.getText().trim()) > 0 && Integer.parseInt(patient_day.getText().trim()) < 31) {
+                        patient.setDay(Integer.parseInt(patient_day.getText().trim()));
+                    } else {
+                        error += "Invalid day\n";
+                    }
+                    break;
+                case 2:
+                    if (Integer.parseInt(patient_day.getText().trim()) > 0 && Integer.parseInt(patient_day.getText().trim()) < 30 &&
+                            Integer.parseInt(patient_day.getText().trim()) % 4 == 0) {
+                        patient.setDay(Integer.parseInt(patient_day.getText().trim()));
+                    } else if (Integer.parseInt(patient_day.getText().trim()) > 0 && Integer.parseInt(doctor_day.getText().trim()) < 29 &&
+                            Integer.parseInt(patient_day.getText().trim()) % 4 != 0) {
+                        patient.setDay(Integer.parseInt(patient_day.getText().trim()));
+                    } else {
+                        error += "Invalid day\n";
+                    }
+                    break;
+            }
+        }
+
+        if (patient_month.getText().trim().isEmpty()) {
+            error += "Please enter month\n";
+        } else {
+            if (Integer.parseInt(patient_month.getText().trim()) > 0 && Integer.parseInt(patient_month.getText().trim()) < 13) {
+                patient.setMonth(Integer.parseInt(patient_month.getText().trim()));
+            } else {
+                error += "Invalid month\n";
+            }
+        }
+
+        if (patient_year.getText().trim().isEmpty()) {
+            error += "Please enter year\n";
+        } else {
+            if (Integer.parseInt(patient_year.getText().trim()) > 1900 && Integer.parseInt(patient_year.getText().trim()) < new Time_Stamp().getYear()) {
+                patient.setMonth(Integer.parseInt(patient_year.getText().trim()));
+            } else {
+                error += "Invalid Year\n";
+            }
+        }
+
+
+        if (patient_mobileNumber.getText().trim().isEmpty()) {
+            error += "Please enter mobile number\n";
+        } else {
+            patient.setPhoneNumber(patient_mobileNumber.getText().trim());
+        }
+
+
+        if (patient_email.getText().trim().isEmpty()) {
+            error += "Please enter e-mail\n";
+        } else {
+            patient.setEmail(patient_email.getText().trim());
+        }
+
+        if (patient_ID.getText().trim().isEmpty()) {
+            error += "Please enter ID\n";
+        } else {
+            patient.setId(patient_ID.getText().trim());
+        }
+
+
+        if (error.isEmpty()) {
+//            if (!fireBase.checkDoctor("SPDR" + doctor_email.getText().trim())) {
+//           if (true) {
+//               doctor.continueCreationDr();
+//                if (fireBase.writeDoctorToFireBase(doctor)) {
+////                    JOptionPane.showMessageDialog(null, "Doctor Created Successfully\nDoctor ID: " + doctor.getId() +
+////                            "\n( Please save this ID and use it to sign in )\n", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+////                }
+            System.out.println("Sign Up Successful");
+//            } else {
+//                JOptionPane.showMessageDialog(null, "This Patient is already signed up with\n the ID: SPPT" + patient_ID.getText().trim(), "Error", JOptionPane.ERROR_MESSAGE);
+//            }
+//        }   else {
+//            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+
+            private void signUpPharmacy () {
+                String error = "";
+
+                if (pharmacy_name.getText().trim().isEmpty()) {
+                    error += "Please enter pharmacy Name\n";
+                } else {
+                    pharmacy.setPharmacyName(pharmacy_name.getText().trim());
+                }
 
         if (pharmacy_licenceID.getText().trim().isEmpty()) {
             error += "Please enter licence ID\n";
@@ -286,42 +402,70 @@ public class SignUpWindow {
             }
         }
 
-        if (doctor_year.getText().trim().isEmpty()) {
-            error += "Please enter year\n";
-        } else {
-            if (Integer.parseInt(doctor_year.getText().trim()) > 1900 && Integer.parseInt(doctor_year.getText().trim()) < new Time_Stamp().getYear()) {
-                doctor.setMonth(Integer.parseInt(doctor_year.getText().trim()));
-            } else {
-                error += "Invalid Year\n";
-            }
-        }
+                if (doctor_year.getText().trim().isEmpty()) {
+                    error += "Please enter year\n";
+                } else {
+                    if (Integer.parseInt(doctor_year.getText().trim()) > 1900 && Integer.parseInt(doctor_year.getText().trim()) < new Time_Stamp().getYear()) {
+                        doctor.setMonth(Integer.parseInt(doctor_year.getText().trim()));
+                    } else {
+                        error += "Invalid Year\n";
+                    }
+                }
+
+                if (doctor_speciality.getText().trim().isEmpty()) {
+                    error += "Please enter speciality\n";
+                } else {
+                    doctor.setSpecialty(doctor_speciality.getText().trim());
+                }
+
+                if (doctor_mobileNumber.getText().trim().isEmpty()) {
+                    error += "Please enter mobile number\n";
+                } else {
+                    doctor.setMobileNumber(doctor_mobileNumber.getText().trim());
+                }
+
+                if (doctor_clinicNumber.getText().trim().isEmpty()) {
+                    error += "Please enter clinic phone number\n";
+                } else {
+                    doctor.setClinicPhoneNumber(doctor_clinicNumber.getText().trim());
+                }
+
+                if (doctor_email.getText().trim().isEmpty()) {
+                    error += "Please enter e-mail\n";
+                } else {
+                    doctor.setEmail(doctor_email.getText().trim());
+                }
+
+                if (doctor_licenceID.getText().trim().isEmpty()) {
+                    error += "Please enter licence ID\n";
+                } else {
+                    doctor.setLicenseId(doctor_licenceID.getText().trim());
+                }
 
 
-
-
-        if (doctor_password.getPassword().length >= 8) {
-            if (String.valueOf(doctor_password.getPassword()).equals(String.valueOf(doctor_confirmPassword.getPassword()))) {
-                doctor.passwordSet(String.valueOf(doctor_password.getPassword()));
-            } else {
-                error += "Password doesn't match\n";
-            }
-        } else {
-            error += "Password must be more than 8 characters";
+                if (doctor_password.getPassword().length >= 8) {
+                    if (String.valueOf(doctor_password.getPassword()).equals(String.valueOf(doctor_confirmPassword.getPassword()))) {
+                        doctor.passwordSet(String.valueOf(doctor_password.getPassword()));
+                    } else {
+                        error += "Password doesn't match\n";
+                    }
+                } else {
+                    error += "Password must be more than 8 characters";
         }
 
 
         if (error.isEmpty()) {
-//            if (!fireBase.checkDoctor("SPDR" + doctor_email.getText().trim())) {
-            if (true) {
-//                doctor.continueCreationDr();
-//                if (fireBase.writeDoctorToFireBase(doctor)) {
-//                    JOptionPane.showMessageDialog(null, "Doctor Created Successfully\nDoctor ID: " + doctor.getId() +
-//                            "\n( Please save this ID and use it to sign in )\n", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
-//                }
-                System.out.println("Sign Up Successful");
-            } else {
-                JOptionPane.showMessageDialog(null, "This Doctor is already signed up with\n the ID: SPDR" + doctor_licenceID.getText().trim(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            if (!fireBase.checkDoctor("SPDR" + doctor_email.getText().trim())) {
+                if (true) {
+                    doctor.continueCreationDr();
+                    if (fireBase.writeDoctorToFireBase(doctor)) {
+                        JOptionPane.showMessageDialog(null, "Doctor Created Successfully\nDoctor ID: " + doctor.getId() +
+                                "\n( Please save this ID and use it to sign in )\n", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    System.out.println("Sign Up Successful");
+                } else {
+                    JOptionPane.showMessageDialog(null, "This Doctor is already signed up with\n the ID: SPDR" + doctor_licenceID.getText().trim(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
         } else {
             JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         }

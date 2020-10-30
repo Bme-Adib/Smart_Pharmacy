@@ -45,17 +45,20 @@ public class FireBase {
         FirebaseApp.initializeApp(options);
     }
 
-    public void writePatientToFireBase(Patient patient) {
+    public boolean writePatientToFireBase(Patient patient) {
+        boolean success = false;
         Firestore db = FirestoreClient.getFirestore();
         DocumentReference docRef = db.collection(PATIENTS).document(patient.getId());
         ApiFuture<WriteResult> result = docRef.set(patient);
 
         try {
             System.out.println("Update time : " + result.get().getUpdateTime());
+            success = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             ;
         }
+        return success;
 
     }
 
