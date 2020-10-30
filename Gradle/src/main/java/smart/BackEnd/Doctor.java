@@ -41,16 +41,24 @@ public class Doctor {
         this.clinicPhoneNumber = clinicPhoneNumber;
         this.email = email;
         this.licenseId = licenseId;
-        this.fullName = this.firstName + " " + this.lastName;
 
+        this.fullName = this.firstName + " " + this.lastName;
         Time_Stamp time_stamp = new Time_Stamp();
         dateCreated = time_stamp.getCreationTime();
 
         id = "SPDR" + String.valueOf(year).substring(2) + String.format("%02d", month) + String.format("%02d", day) + new Random().nextInt(10000);
     }
 
-    public void passwordSet(String password){
+    public void passwordSet(String password) {
         this.password = new Hashing().SHA256(password);
+    }
+
+    public void continueCreationDr() {
+        this.fullName = this.firstName + " " + this.lastName;
+        Time_Stamp time_stamp = new Time_Stamp();
+        dateCreated = time_stamp.getCreationTime();
+
+        id = "SPDR" + String.valueOf(year).substring(2) + String.format("%02d", month) + String.format("%02d", day) + new Random().nextInt(10000);
     }
 
 

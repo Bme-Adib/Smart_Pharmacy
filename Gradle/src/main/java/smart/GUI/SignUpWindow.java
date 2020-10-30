@@ -91,6 +91,7 @@ public class SignUpWindow {
     private JLabel pharmacy_jConfirmPassword;
     private JPasswordField pharmacy_confirmPassword;
 
+
     private JButton signUp;
 
     private int whichButton = 1;
@@ -213,6 +214,58 @@ public class SignUpWindow {
     }
 
     private void signUpDoctor() {
+        String error = "";
+
+        if (doctor_firstName.getText().trim().isEmpty()) {
+            error += "Please enter First Name\n";
+        } else {
+            doctor.setFirstName(doctor_firstName.getText().trim());
+        }
+
+        if (doctor_lastName.getText().trim().isEmpty()) {
+            error += "Please enter Last Name\n";
+        } else {
+            doctor.setLastName(doctor_lastName.getText().trim());
+        }
+
+        if (doctor_gender.getText().trim().isEmpty()) {
+            error += "Please enter Gender\n";
+        } else {
+            doctor.setGender(doctor_gender.getText().trim());
+        }
+
+        if (doctor_day.getText().trim().isEmpty()) {
+            error += "Please enter day\n";
+        } else {
+            doctor.setDay(Integer.parseInt(doctor_day.getText().trim()));
+        }
+
+
+        if (doctor_password.getPassword().length >= 8) {
+            if (String.valueOf(doctor_password.getPassword()).equals(String.valueOf(doctor_confirmPassword.getPassword()))) {
+                doctor.passwordSet(String.valueOf(doctor_password.getPassword()));
+            } else {
+                error += "Password doesn't match\n";
+            }
+        } else {
+            error += "Password must be more than 8 characters";
+        }
+
+
+        if (error.isEmpty()) {
+//            if (!fireBase.checkDoctor("SPDR" + doctor_email.getText().trim())) {
+            if (true) {
+                doctor.continueCreationDr();
+                if (fireBase.writeDoctorToFireBase(doctor)) {
+                    JOptionPane.showMessageDialog(null, "Doctor Created Successfully\nDoctor ID: " + doctor.getId() +
+                            "\n( Please save this ID and use it to sign in )\n", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "This Doctor is already signed up with\n the ID: SPDR" + doctor_licenceID.getText().trim(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void setUpAssignment() {
