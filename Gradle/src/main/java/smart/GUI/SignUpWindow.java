@@ -29,6 +29,7 @@ public class SignUpWindow {
     private JButton patientType;
 
     private JLabel Fixed1;
+    private String[] genders = {"Male","Female"};
 
     // Doctor Shit
     private JLabel doctor_jFirstName;
@@ -36,7 +37,7 @@ public class SignUpWindow {
     private JLabel doctor_jLastName;
     private JTextField doctor_lastName;
     private JLabel doctor_jGender;
-    private JTextField doctor_gender;
+    private JComboBox<String> doctor_gender;
     private JLabel doctor_jDateOfBirth;
     private JTextField doctor_day;
     private JTextField doctor_month;
@@ -63,7 +64,7 @@ public class SignUpWindow {
     private JLabel patient_jLastName;
     private JTextField patient_lastName;
     private JLabel patient_jGender;
-    private JTextField patient_gender;
+    private JComboBox<String> patient_gender;
     private JLabel patient_jDateOfBirth;
     private JTextField patient_day;
     private JTextField patient_month;
@@ -176,10 +177,10 @@ public class SignUpWindow {
             patient.setLastName(patient_lastName.getText().trim());
         }
 
-        if (patient_gender.getText().trim().isEmpty()) {
+        if (patient_gender.getSelectedItem().toString().trim().isEmpty()) {
             error += "Please enter Gender\n";
         } else {
-            patient.setGender(patient_gender.getText().trim());
+            patient.setGender(patient_gender.getSelectedItem().toString().trim());
         }
 
         if (patient_day.getText().trim().isEmpty()) {
@@ -359,10 +360,10 @@ public class SignUpWindow {
             doctor.setLastName(doctor_lastName.getText().trim());
         }
 
-        if (doctor_gender.getText().trim().isEmpty()) {
+        if (doctor_gender.getSelectedItem().toString().trim().isEmpty()) {
             error += "Please enter Gender\n";
         } else {
-            doctor.setGender(doctor_gender.getText().trim());
+            doctor.setGender(doctor_gender.getSelectedItem().toString().trim());
         }
 
         if (doctor_day.getText().trim().isEmpty()) {
@@ -532,7 +533,8 @@ public class SignUpWindow {
         doctor_jGender.setForeground(PV.BLACK);
         container.add(doctor_jGender);
 
-        doctor_gender = new JTextField();
+        doctor_gender = new JComboBox<>(genders);
+        doctor_gender.setBackground(Color.WHITE);
         doctor_gender.setFont(PV.NORMAL);
         doctor_gender.setForeground(PV.BLACK);
         container.add(doctor_gender);
@@ -662,7 +664,8 @@ public class SignUpWindow {
         patient_jGender.setForeground(PV.BLACK);
         container.add(patient_jGender);
 
-        patient_gender = new JTextField();
+        patient_gender = new JComboBox<>(genders);
+        patient_gender.setBackground(Color.WHITE);
         patient_gender.setFont(PV.NORMAL);
         patient_gender.setForeground(PV.BLACK);
         container.add(patient_gender);
