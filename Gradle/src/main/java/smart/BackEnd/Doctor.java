@@ -53,7 +53,7 @@ public class Doctor {
         this.password = new Hashing().SHA256(password);
     }
 
-    public void continueCreationDr() {
+    public void continueCreation() {
         this.fullName = this.firstName + " " + this.lastName;
         Time_Stamp time_stamp = new Time_Stamp();
         dateCreated = time_stamp.getCreationTime();

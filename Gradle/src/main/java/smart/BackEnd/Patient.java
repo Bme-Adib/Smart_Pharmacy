@@ -23,6 +23,7 @@ public class Patient {
     private String fullName;
     private long ageYears;
     private long ageMonths;
+    private String password;
 
 
 
@@ -52,6 +53,23 @@ public class Patient {
         id = "SPPT" + String.valueOf(year).substring(2) + String.format("%02d", month) + String.format("%02d", day) + new Random().nextInt(10000);
     }
 
+    public void continueCreation(){
+        this.fullName = this.firstName + " " + this.lastName;
+
+        LocalDate dateOfBirth = LocalDate.of(year, month, day);
+        LocalDate now = LocalDate.now();
+        this.ageYears = ChronoUnit.YEARS.between(dateOfBirth, now);
+        this.ageMonths = ChronoUnit.MONTHS.between(dateOfBirth, now) % 12;
+
+        Time_Stamp time_stamp = new Time_Stamp();
+        dateCreated = time_stamp.getCreationTime();
+
+        id = "SPPT" + String.valueOf(year).substring(2) + String.format("%02d", month) + String.format("%02d", day) + new Random().nextInt(10000);
+    }
+
+    public void passwordSet(String password) {
+        this.password = new Hashing().SHA256(password);
+    }
 
     //getter and setters
 

@@ -19,7 +19,7 @@ public class Test1 {
 //        fireBase.writeDoctorToFireBase(doctor);
 
         Pharmacy pharmacy = new Pharmacy("Alma7aba","06540165","LM5ty6231");
-        pharmacy.passwordset("aishaIsAmazing");
+        pharmacy.passwordSet("aishaIsAmazing");
         fireBase.writePharmacyToFireBase(pharmacy);
 
 

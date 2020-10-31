@@ -25,7 +25,7 @@ public class Pharmacy {
         id = "SPPH" + licenseId;
     }
 
-    public void passwordset(String password){
+    public void passwordSet(String password){
         this.password = new Hashing().SHA256(password);
     }
 
