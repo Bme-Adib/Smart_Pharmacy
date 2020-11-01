@@ -1,9 +1,6 @@
 package smart.GUI;
 
-import smart.BackEnd.Doctor;
-import smart.BackEnd.Patient;
-import smart.BackEnd.Pharmacy;
-import smart.BackEnd.Time_Stamp;
+import smart.BackEnd.*;
 import smart.FireStore.FireBase;
 
 import javax.swing.*;
@@ -24,12 +21,15 @@ public class SignUpWindow {
     private JFrame windowSignUp;
     private Container container;
     //
-    private JButton doctorType;
-    private JButton pharmacyType;
-    private JButton patientType;
+//    private JButton doctorType;
+//    private JButton pharmacyType;
+//    private JButton patientType;
+
+    private JComboBox<String> accountType;
+    private String[] accountTypeStrings = {"Please choose account type", "Doctor Account", "Pharmacy Account", "Patient Account"};
 
     private JLabel Fixed1;
-    private String[] genders = {"Male","Female"};
+
 
     // Doctor Shit
     private JLabel doctor_jFirstName;
@@ -88,6 +88,8 @@ public class SignUpWindow {
     private JTextField pharmacy_phoneNumber;
     private JLabel pharmacy_jlicenceID;
     private JTextField pharmacy_licenceID;
+    private JLabel pharmacy_jEmail;
+    private JTextField pharmacy_email;
     private JLabel pharmacy_jPassword;
     private JPasswordField pharmacy_password;
     private JLabel pharmacy_jConfirmPassword;
@@ -95,7 +97,7 @@ public class SignUpWindow {
 
     private JButton signUp;
 
-    private int whichButton = 1;
+    private int whichButton = 0;
 
 
     public void runSignUp(FireBase fireBase) {
@@ -104,6 +106,7 @@ public class SignUpWindow {
         setUpAssignment();
         setPlacement();
         setClickListeners();
+        setDoctorVisibility(false);
         setPharmacyVisibility(false);
         setPatientVisibility(false);
 
@@ -112,37 +115,64 @@ public class SignUpWindow {
     }
 
     private void setClickListeners() {
-        doctorType.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Fixed1.setText("Create New Doctor Account:");
-                setDoctorVisibility(true);
-                setPatientVisibility(false);
-                setPharmacyVisibility(false);
-            }
-        });
-        pharmacyType.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Fixed1.setText("Create New Pharmacy Account:");
-                setDoctorVisibility(false);
-                setPatientVisibility(false);
-                setPharmacyVisibility(true);
-            }
-        });
-        patientType.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Fixed1.setText("Create New Patient Account:");
-                setDoctorVisibility(false);
-                setPatientVisibility(true);
-                setPharmacyVisibility(false);
-            }
-        });
+//        doctorType.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                Fixed1.setText("Create New Doctor Account:");
+//                setDoctorVisibility(true);
+//                setPatientVisibility(false);
+//                setPharmacyVisibility(false);
+//            }
+//        });
+//        pharmacyType.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                Fixed1.setText("Create New Pharmacy Account:");
+//                setDoctorVisibility(false);
+//                setPatientVisibility(false);
+//                setPharmacyVisibility(true);
+//            }
+//        });
+//        patientType.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                Fixed1.setText("Create New Patient Account:");
+//                setDoctorVisibility(false);
+//                setPatientVisibility(true);
+//                setPharmacyVisibility(false);
+//            }
+//        });
         signUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 signUpMethod();
+            }
+        });
+        accountType.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switch (accountType.getSelectedIndex()) {
+                    case 0:
+                        setDoctorVisibility(false);
+                        setPatientVisibility(false);
+                        setPharmacyVisibility(false);
+                        break;
+                    case 1:
+                        setDoctorVisibility(true);
+                        setPatientVisibility(false);
+                        setPharmacyVisibility(false);
+                        break;
+                    case 2:
+                        setDoctorVisibility(false);
+                        setPatientVisibility(false);
+                        setPharmacyVisibility(true);
+                        break;
+                    case 3:
+                        setDoctorVisibility(false);
+                        setPatientVisibility(true);
+                        setPharmacyVisibility(false);
+                        break;
+                }
             }
         });
     }
@@ -253,9 +283,9 @@ public class SignUpWindow {
 
 
         if (!patient_email.getText().trim().isEmpty()) {
-            if (patient_email.getText().trim().contains("@") && patient_email.getText().trim().contains(".")){
+            if (patient_email.getText().trim().contains("@") && patient_email.getText().trim().contains(".")) {
                 patient.setEmail(patient_email.getText().trim());
-            }else {
+            } else {
                 error += "Invalid Email\n";
             }
         } else {
@@ -280,18 +310,20 @@ public class SignUpWindow {
 
 
         if (error.isEmpty()) {
-            if (fireBase.checkPatient(patient_email.getText().trim())){
+            if (fireBase.checkPatient(patient_email.getText().trim())) {
                 JOptionPane.showMessageDialog(null, "Email already exist", "Error", JOptionPane.ERROR_MESSAGE);
-            }else{
+            } else {
                 patient.continueCreation();
-                if(fireBase.writePatientToFireBase(patient)){
-                    JOptionPane.showMessageDialog(null, "Patient Account Created Successfully\nPatient ID: " + doctor.getId() +
+                if (fireBase.writePatientToFireBase(patient)) {
+                    sendEmail(patient.getEmail(),patient.getFullName(),patient.getId());
+                    JOptionPane.showMessageDialog(null, "Patient Account Created Successfully\nPatient ID: " + patient.getId() +
                             "\n( Please save this ID and use it to sign in )\n", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
-                }else{
+                    moveToSignInWindow();
+                } else {
                     JOptionPane.showMessageDialog(null, "Something is Wrong", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }else {
+        } else {
             JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -309,6 +341,16 @@ public class SignUpWindow {
             error += "Please enter licence ID\n";
         } else {
             pharmacy.setLicenseId(pharmacy_licenceID.getText().trim());
+        }
+
+        if (!pharmacy_email.getText().trim().isEmpty()) {
+            if (pharmacy_email.getText().trim().contains("@") && pharmacy_email.getText().trim().contains(".")) {
+                pharmacy.setEmail(pharmacy_email.getText().trim());
+            } else {
+                error += "Invalid Email\n";
+            }
+        } else {
+            error += "Please enter e-mail\n";
         }
 
         if (pharmacy_phoneNumber.getText().trim().isEmpty()) {
@@ -332,8 +374,10 @@ public class SignUpWindow {
             if (!fireBase.checkPharmacy("SPPH" + pharmacy_licenceID.getText().trim())) {
                 pharmacy.continueCreation();
                 if (fireBase.writePharmacyToFireBase(pharmacy)) {
+                    sendEmail(pharmacy.getEmail(),pharmacy.getPharmacyName(),pharmacy.getId());
                     JOptionPane.showMessageDialog(null, "Pharmacy Account Created Successfully\nPharmacy ID: " + pharmacy.getId() +
                             "\n( Please save this ID and use it to sign in )\n", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
+                    moveToSignInWindow();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "This Pharmacy is already signed up with\n the ID: SPPH" + pharmacy_licenceID.getText().trim(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -446,9 +490,9 @@ public class SignUpWindow {
         }
 
         if (!doctor_email.getText().trim().isEmpty()) {
-            if (doctor_email.getText().trim().contains("@") && doctor_email.getText().trim().contains(".")){
+            if (doctor_email.getText().trim().contains("@") && doctor_email.getText().trim().contains(".")) {
                 doctor.setEmail(doctor_email.getText().trim());
-            }else {
+            } else {
                 error += "Invalid Email\n";
             }
         } else {
@@ -474,20 +518,31 @@ public class SignUpWindow {
 
 
         if (error.isEmpty()) {
-            if (fireBase.checkDoctor(doctor_email.getText().trim())){
+            if (fireBase.checkDoctor(doctor_email.getText().trim())) {
                 JOptionPane.showMessageDialog(null, "Email already exist", "Error", JOptionPane.ERROR_MESSAGE);
-            }else{
+            } else {
                 doctor.continueCreation();
-                if(fireBase.writeDoctorToFireBase(doctor)){
+                if (fireBase.writeDoctorToFireBase(doctor)) {
+                    sendEmail(doctor.getEmail(),"Dr. " + doctor.getFullName(),doctor.getId());
                     JOptionPane.showMessageDialog(null, "Doctor Account Created Successfully\nDoctor ID: " + doctor.getId() +
                             "\n( Please save this ID and use it to sign in )\n", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
-                }else{
+                    moveToSignInWindow();
+                } else {
                     JOptionPane.showMessageDialog(null, "Something is Wrong", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }else {
+        } else {
             JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void moveToSignInWindow() {
+        windowSignUp.dispose();
+        new SignInWindow().runSignIn(fireBase);
+    }
+
+    private void sendEmail(String email, String fullName, String id) {
+        new SendEmail().sendGreetingEmail(email,fullName,id);
     }
 
     private void setUpAssignment() {
@@ -495,17 +550,23 @@ public class SignUpWindow {
         doctor = new Doctor();
         patient = new Patient();
 
-
-        //Doctor Shit
-        doctorType = new JButton("Doctor");
-        doctorType.setFont(PV.HEADING2);
-        doctorType.setForeground(PV.BLACK);
-        container.add(doctorType);
-
-        Fixed1 = new JLabel("Create New Doctor Account:");
+        Fixed1 = new JLabel("Create New ");
         Fixed1.setFont(PV.HEADING1);
         Fixed1.setForeground(PV.BLACK);
         container.add(Fixed1);
+
+        accountType = new JComboBox<>(accountTypeStrings);
+        accountType.setBackground(Color.WHITE);
+        accountType.setFont(PV.HEADING2);
+        accountType.setForeground(PV.BLACK);
+        container.add(accountType);
+
+
+        //Doctor Shit
+//        doctorType = new JButton("Doctor");
+//        doctorType.setFont(PV.HEADING2);
+//        doctorType.setForeground(PV.BLACK);
+//        container.add(doctorType);
 
 
         doctor_jFirstName = new JLabel("First Name");
@@ -533,7 +594,7 @@ public class SignUpWindow {
         doctor_jGender.setForeground(PV.BLACK);
         container.add(doctor_jGender);
 
-        doctor_gender = new JComboBox<>(genders);
+        doctor_gender = new JComboBox<>(PV.GENDERS_LIST);
         doctor_gender.setBackground(Color.WHITE);
         doctor_gender.setFont(PV.NORMAL);
         doctor_gender.setForeground(PV.BLACK);
@@ -633,10 +694,10 @@ public class SignUpWindow {
 
 
         //Patient  Shit
-        patientType = new JButton("Patient");
-        patientType.setFont(PV.HEADING2);
-        patientType.setForeground(PV.BLACK);
-        container.add(patientType);
+//        patientType = new JButton("Patient");
+//        patientType.setFont(PV.HEADING2);
+//        patientType.setForeground(PV.BLACK);
+//        container.add(patientType);
 
 
         patient_jFirstName = new JLabel("First Name");
@@ -664,7 +725,7 @@ public class SignUpWindow {
         patient_jGender.setForeground(PV.BLACK);
         container.add(patient_jGender);
 
-        patient_gender = new JComboBox<>(genders);
+        patient_gender = new JComboBox<>(PV.GENDERS_LIST);
         patient_gender.setBackground(Color.WHITE);
         patient_gender.setFont(PV.NORMAL);
         patient_gender.setForeground(PV.BLACK);
@@ -746,10 +807,10 @@ public class SignUpWindow {
 
 
         //Pharmacy  Shit
-        pharmacyType = new JButton("Pharmacy");
-        pharmacyType.setFont(PV.HEADING2);
-        pharmacyType.setForeground(PV.BLACK);
-        container.add(pharmacyType);
+//        pharmacyType = new JButton("Pharmacy");
+//        pharmacyType.setFont(PV.HEADING2);
+//        pharmacyType.setForeground(PV.BLACK);
+//        container.add(pharmacyType);
 
         pharmacy_jName = new JLabel("Pharmacy Name");
         pharmacy_jName.setFont(PV.NORMALBOLD);
@@ -781,6 +842,16 @@ public class SignUpWindow {
         pharmacy_licenceID.setFont(PV.NORMAL);
         pharmacy_licenceID.setForeground(PV.BLACK);
         container.add(pharmacy_licenceID);
+
+        pharmacy_jEmail = new JLabel("Email");
+        pharmacy_jEmail.setFont(PV.NORMALBOLD);
+        pharmacy_jEmail.setForeground(PV.BLACK);
+        container.add(pharmacy_jEmail);
+
+        pharmacy_email = new JTextField();
+        pharmacy_email.setFont(PV.NORMAL);
+        pharmacy_email.setForeground(PV.BLACK);
+        container.add(pharmacy_email);
 
         pharmacy_jPassword = new JLabel("Password");
         pharmacy_jPassword.setFont(PV.NORMALBOLD);
@@ -821,14 +892,15 @@ public class SignUpWindow {
         int xMargin2 = xMargin + jLableWidth + 10;
 
 
-        doctorType.setBounds(50 + 440 - 300, yStep, doctorType.getPreferredSize().width, doctorType.getPreferredSize().height);
-        pharmacyType.setBounds(50 + 440 - 150, yStep, pharmacyType.getPreferredSize().width, pharmacyType.getPreferredSize().height);
-        patientType.setBounds(50 + 460, yStep, patientType.getPreferredSize().width, patientType.getPreferredSize().height);
+//        doctorType.setBounds(50 + 440 - 300, yStep, doctorType.getPreferredSize().width, doctorType.getPreferredSize().height);
+//        pharmacyType.setBounds(50 + 440 - 150, yStep, pharmacyType.getPreferredSize().width, pharmacyType.getPreferredSize().height);
+//        patientType.setBounds(50 + 460, yStep, patientType.getPreferredSize().width, patientType.getPreferredSize().height);
 
         //Line
-        yStep += doctorType.getPreferredSize().height + lineSpacer;
-        yStep += doctorType.getPreferredSize().height + lineSpacer;
-        Fixed1.setBounds(xMargin, yStep, 300, Fixed1.getPreferredSize().height);
+        yStep = 50;
+        Fixed1.setBounds(xMargin, yStep, Fixed1.getPreferredSize().width, Fixed1.getPreferredSize().height);
+        accountType.setBounds(xMargin + Fixed1.getPreferredSize().width + 5, yStep, accountType.getPreferredSize().width, accountType.getPreferredSize().height);
+
 
         //Line1
         yStep += Fixed1.getPreferredSize().height + lineSpacer * 4;
@@ -846,8 +918,9 @@ public class SignUpWindow {
         doctor_lastName.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
         patient_jLastName.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
         patient_lastName.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
-        pharmacy_jlicenceID.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
-        pharmacy_licenceID.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
+        pharmacy_jEmail.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
+        pharmacy_email.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
+
 
         //Line
         yStep += doctor_jFirstName.getPreferredSize().height + lineSpacer;
@@ -855,8 +928,9 @@ public class SignUpWindow {
         doctor_gender.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
         patient_jGender.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
         patient_gender.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
-        pharmacy_jPhoneNumber.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
-        pharmacy_phoneNumber.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
+        pharmacy_jlicenceID.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
+        pharmacy_licenceID.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
+
 
 
         //Line
@@ -869,8 +943,9 @@ public class SignUpWindow {
         patient_day.setBounds(xMargin2, yStep, 20, doctor_jFirstName.getPreferredSize().height + 3);
         patient_month.setBounds(xMargin2 + 30, yStep, 20, doctor_jFirstName.getPreferredSize().height + 3);
         patient_year.setBounds(xMargin2 + 60, yStep, 40, doctor_jFirstName.getPreferredSize().height + 3);
-        pharmacy_jPassword.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
-        pharmacy_password.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
+        pharmacy_jPhoneNumber.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
+        pharmacy_phoneNumber.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
+
 
         //Line
         yStep += doctor_jFirstName.getPreferredSize().height + lineSpacer;
@@ -878,8 +953,9 @@ public class SignUpWindow {
         doctor_speciality.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
         patient_jID.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
         patient_ID.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
-        pharmacy_jConfirmPassword.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
-        pharmacy_confirmPassword.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
+        pharmacy_jPassword.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
+        pharmacy_password.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
+
 
         //Line
         yStep += doctor_jFirstName.getPreferredSize().height + lineSpacer;
@@ -887,6 +963,8 @@ public class SignUpWindow {
         doctor_mobileNumber.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
         patient_jEmail.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
         patient_email.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
+        pharmacy_jConfirmPassword.setBounds(xMargin, yStep, jLableWidth, doctor_jFirstName.getPreferredSize().height);
+        pharmacy_confirmPassword.setBounds(xMargin2, yStep, jTextFieldWidth, doctor_jFirstName.getPreferredSize().height + 3);
 
 
         //Line
@@ -927,7 +1005,7 @@ public class SignUpWindow {
     }
 
     private void setUpWindow() {
-        windowSignUp = new JFrame(PV.APP_TITLE);
+        windowSignUp = new JFrame(PV.APP_TITLE + " - Sign Up");
         windowWidth = PV.WINDOW_WIDTH;
         windowHeight = PV.WINDOW_HEIGHT;
         windowSignUp.setSize(windowWidth, windowHeight);
@@ -1005,6 +1083,8 @@ public class SignUpWindow {
         pharmacy_name.setVisible(v);
         pharmacy_phoneNumber.setVisible(v);
         pharmacy_jPhoneNumber.setVisible(v);
+        pharmacy_email.setVisible(v);
+        pharmacy_jEmail.setVisible(v);
         pharmacy_licenceID.setVisible(v);
         pharmacy_jlicenceID.setVisible(v);
         pharmacy_password.setVisible(v);

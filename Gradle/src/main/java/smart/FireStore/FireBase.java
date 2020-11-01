@@ -259,6 +259,26 @@ public class FireBase {
         return found;
     }
 
+    public boolean checkDoctorID(String id) {
+        boolean found = false;
+        if (!id.isEmpty()) {
+            Firestore db = FirestoreClient.getFirestore();
+            CollectionReference collectionReference = db.collection(DOCTORS);
+            ApiFuture<QuerySnapshot> query = collectionReference.get();
+            QuerySnapshot querySnapshot = null;
+            try {
+                querySnapshot = query.get();
+                List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+                for (QueryDocumentSnapshot document : documents) {
+                    if (document.getId().equals(id)) found = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return found;
+    }
+
     public boolean checkDoctor(String email) {
         boolean found = false;
         if (!email.isEmpty()) {
@@ -291,6 +311,26 @@ public class FireBase {
                 List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
                 for (QueryDocumentSnapshot document : documents) {
                     if (document.getString("email").equals(email)) found = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return found;
+    }
+
+    public boolean checkPatientID(String id) {
+        boolean found = false;
+        if (!id.isEmpty()) {
+            Firestore db = FirestoreClient.getFirestore();
+            CollectionReference collectionReference = db.collection(PATIENTS);
+            ApiFuture<QuerySnapshot> query = collectionReference.get();
+            QuerySnapshot querySnapshot = null;
+            try {
+                querySnapshot = query.get();
+                List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+                for (QueryDocumentSnapshot document : documents) {
+                    if (document.getId().equals(id)) found = true;
                 }
             } catch (Exception e) {
                 e.printStackTrace();

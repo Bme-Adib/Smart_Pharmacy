@@ -2,6 +2,7 @@ package smart.GUI;
 
 import smart.BackEnd.Doctor;
 import smart.BackEnd.Hashing;
+import smart.BackEnd.Patient;
 import smart.BackEnd.Pharmacy;
 import smart.FireStore.FireBase;
 
@@ -17,6 +18,7 @@ public class SignInWindow {
     private FireBase fireBase;
     private Pharmacy pharmacy;
     private Doctor doctor;
+    private Patient patient;
     private String idType;
     //
     private JFrame windowSignIn;
@@ -88,11 +90,10 @@ public class SignInWindow {
             idType = "AISHA ALHARWEEL";
         }
         if (idType.equals("DR")) {
-            if (fireBase.checkDoctor(idByUser)) {
-
+            if (fireBase.checkDoctorID(idByUser)) {
                 doctor = fireBase.readDoctor(idByUser);
                 if (new Hashing().SHA256(String.valueOf(password.getPassword())).equals(doctor.getPassword())) {
-                    startNewWindow();
+                    startDoctorWindow(fireBase,doctor);
                 } else {
                     JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -102,10 +103,21 @@ public class SignInWindow {
 
         } else if (idType.equals("PH")) {
             if (fireBase.checkPharmacy(idByUser)) {
-
                 pharmacy = fireBase.readPharmacy(idByUser);
                 if (new Hashing().SHA256(String.valueOf(password.getPassword())).equals(pharmacy.getPassword())) {
-                    startNewWindow();
+                    startPharmacyWindow(fireBase,pharmacy);
+                } else {
+                    JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (idType.equals("PT")) {
+            if (fireBase.checkPatientID(idByUser)) {
+
+                patient = fireBase.readPatient(idByUser);
+                if (new Hashing().SHA256(String.valueOf(password.getPassword())).equals(patient.getPassword())) {
+                    startPatientWindow(fireBase,patient);
                 } else {
                     JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -115,6 +127,17 @@ public class SignInWindow {
         } else {
             JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void startDoctorWindow(FireBase fireBase, Doctor doctor) {
+        windowSignIn.dispose();
+        new DoctorWindow().runDoctor(fireBase,doctor);
+    }
+
+    private void startPatientWindow(FireBase fireBase, Patient patient) {
+    }
+
+    private void startPharmacyWindow(FireBase fireBase, Pharmacy pharmacy) {
     }
 
     private void setUpAssignment() {
@@ -133,7 +156,7 @@ public class SignInWindow {
         jID.setForeground(PV.BLACK);
         container.add(jID);
 
-        id = new JTextField();
+        id = new JTextField("SPDR9306057462");
         id.setFont(PV.NORMAL);
         id.setForeground(PV.BLACK);
         container.add(id);
@@ -143,7 +166,7 @@ public class SignInWindow {
         jPassword.setForeground(PV.BLACK);
         container.add(jPassword);
 
-        password = new JPasswordField();
+        password = new JPasswordField("12345678");
         password.setFont(PV.NORMAL);
         password.setForeground(PV.BLACK);
         container.add(password);
@@ -194,18 +217,18 @@ public class SignInWindow {
         //Line 5
         yStep += jID.getPreferredSize().height + lineSpacer;
         yStep += jID.getPreferredSize().height + lineSpacer;
-        signIn.setBounds((logo_dim - signIn.getPreferredSize().width) / 2 + 300, yStep, signIn.getPreferredSize().width, signIn.getPreferredSize().height);
+        signIn.setBounds((logo_dim - signUp.getPreferredSize().width) / 2 + 300, yStep, signUp.getPreferredSize().width, signIn.getPreferredSize().height);
 
         //Line 6
         yStep += signIn.getPreferredSize().height + lineSpacer;
         signUp.setBounds((logo_dim - signUp.getPreferredSize().width) / 2 + 300, yStep, signUp.getPreferredSize().width, signUp.getPreferredSize().height);
 
         ps = jSignature.getPreferredSize();
-        jSignature.setBounds(windowWidth-ps.width-20,540,ps.width,ps.height);
+        jSignature.setBounds(windowWidth - ps.width - 20, 540, ps.width, ps.height);
     }
 
     private void setUpWindow() {
-        windowSignIn = new JFrame(PV.APP_TITLE);
+        windowSignIn = new JFrame(PV.APP_TITLE + " - Sign In");
         windowWidth = PV.WINDOW_WIDTH;
         windowHeight = PV.WINDOW_HEIGHT;
         windowSignIn.setSize(windowWidth, windowHeight);
@@ -219,11 +242,4 @@ public class SignInWindow {
         container.setLayout(null);
     }
 
-    private void startNewWindow() {
-        if (idType.equals("DR")) {
-            System.out.println("Open Doctor Window");
-        } else if (idType.equals("PH")) {
-            System.out.println("Open Pharmacy Window");
-        }
-    }
 }

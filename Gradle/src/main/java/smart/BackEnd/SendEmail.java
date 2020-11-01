@@ -20,7 +20,72 @@ public class SendEmail {
     public static final String WELCOME_EMAIL="welcomeEmail";
     private String subject = "Welcome To Smart Pharmacy";
 
-    public SendEmail SendEmailFROMTO(String to, String Subject, String Messgae, String attachmentPath, String attachmentName) {
+    public void sendGreetingEmail(String to, String name, String ID) {
+
+        String from = "aishaalharweel@gmail.com";
+        String password = "Faraghannam@66";
+
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(prop, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, password);
+            }
+        });
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+
+            message.setSubject("Welcome to Smart Pharmacy Project");
+
+
+            // Create the message part
+            BodyPart messageBodyPart = new MimeBodyPart();
+
+
+            String Messgae = "<h1><strong>Welcome "+ name +"</strong></h1>\n" +
+                    "<p>You have signed up successfully for smart pharmacy account</p>\n" +
+                    "<p><strong>your account ID : "+ ID +"</strong></p>";
+
+            // Now set the actual message
+            messageBodyPart.setContent(Messgae, "text/html");
+
+            // Create a multipar message
+            Multipart multipart = new MimeMultipart();
+
+            String attachmentPath="";
+            String attachmentName="";
+            // Set text message part
+            multipart.addBodyPart(messageBodyPart);
+            if (!attachmentPath.isEmpty()) {
+                // Part two is attachment
+                messageBodyPart = new MimeBodyPart();
+                String filename = attachmentPath;
+                DataSource source = new FileDataSource(filename);
+                messageBodyPart.setDataHandler(new DataHandler(source));
+                messageBodyPart.setFileName(attachmentName);
+                multipart.addBodyPart(messageBodyPart);
+            }
+            // Send the complete message parts
+            message.setContent(multipart, "text/html; charset=utf-8");
+
+
+            Transport.send(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendEmail(String to, String Subject, String Messgae, String attachmentPath, String attachmentName) {
 
         String from = "aishaalharweel@gmail.com";
         String password = "Faraghannam@66";
@@ -76,9 +141,6 @@ public class SendEmail {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-        return this;
     }
 
 

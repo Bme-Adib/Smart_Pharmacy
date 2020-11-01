@@ -8,6 +8,7 @@ public class Pharmacy {
     private String pharmacyName;
     private String phoneNumber;
     private String licenseId;
+    private String email;
     private String password;
 
 
@@ -40,6 +41,14 @@ public class Pharmacy {
 
 //setters and getters
 
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getPassword() {
         return password;
