@@ -13,6 +13,9 @@ public class PV {
     public static final Color HEADINGCOLOR = Color.decode("#DC143C");     // Red
 //    public static final Color HEADINGCOLOR = Color.decode("#C86EF5");   // Purple
 
+    public static final String[] DRUGS = {"None","Aspirin","Panadol","Vermont","Aisha"};
+    public static final String[] DRUGS_EFFECTIVE_SUBSTANCE = {"None","Aspirin","Panadol","Vermont","Boobies"};
+
     public static final Font HEADING = new Font("Serif", Font.BOLD, 25);
     public static final Font HEADING1 = new Font("Serif", Font.BOLD, 20);
     public static final Font HEADING2 = new Font("Serif", Font.BOLD, 16);
