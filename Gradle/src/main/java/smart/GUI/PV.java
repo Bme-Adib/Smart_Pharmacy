@@ -10,7 +10,8 @@ public class PV {
     public static final Color APPLICATION_BACKGROUND = Color.WHITE;
 
     public static final Color BLACK = Color.BLACK;
-    public static final Color HEADINGCOLOR = Color.decode("#DC143C");
+    public static final Color HEADINGCOLOR = Color.decode("#DC143C");     // Red
+//    public static final Color HEADINGCOLOR = Color.decode("#C86EF5");   // Purple
 
     public static final Font HEADING = new Font("Serif", Font.BOLD, 25);
     public static final Font HEADING1 = new Font("Serif", Font.BOLD, 20);

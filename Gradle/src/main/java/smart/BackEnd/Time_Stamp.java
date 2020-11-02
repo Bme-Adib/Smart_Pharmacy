@@ -20,7 +20,7 @@ public class Time_Stamp {
     public String getTimeId() {
         Calendar cal = Calendar.getInstance();
         Date date = cal.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd-HH-mm-ss");
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         this.TS = dateFormat.format(date);
         return TS;
     }

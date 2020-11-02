@@ -8,6 +8,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import smart.BackEnd.*;
 
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -337,6 +338,50 @@ public class FireBase {
             }
         }
         return found;
+    }
+
+
+    public DefaultListModel readPatientSessions(String patientID, ArrayList<PtSession> sessionsArrayList) {
+
+        DefaultListModel listModel = new DefaultListModel();
+        Firestore db = FirestoreClient.getFirestore();
+        CollectionReference collectionReference = db.collection(PATIENTS).document(patientID).collection(SESSION);
+        ApiFuture<QuerySnapshot> query = collectionReference.get();
+        QuerySnapshot querySnapshot = null;
+
+        try {
+            querySnapshot = query.get();
+            List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+            for (QueryDocumentSnapshot document : documents) {
+                sessionsArrayList.add(document.toObject(PtSession.class));
+                listModel.addElement(document.getId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return listModel;
+    }
+
+    public ArrayList<Drug> readPatientDrugs(String patientID, String sessionID) {
+
+        ArrayList<Drug> drugArrayList = new ArrayList<>();
+        Firestore db = FirestoreClient.getFirestore();
+        CollectionReference collectionReference = db.collection(PATIENTS).document(patientID).collection(SESSION).document(sessionID).collection(DRUGS);
+        ApiFuture<QuerySnapshot> query = collectionReference.get();
+        QuerySnapshot querySnapshot = null;
+
+        try {
+            querySnapshot = query.get();
+            List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+            for (QueryDocumentSnapshot document : documents) {
+                drugArrayList.add(document.toObject(Drug.class));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return drugArrayList;
     }
 
 }

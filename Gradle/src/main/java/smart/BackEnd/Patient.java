@@ -19,11 +19,13 @@ public class Patient {
     private int year;
     private String email;
     private String phoneNumber;
+    private String IDN;
     //Auto Complete
     private String fullName;
     private long ageYears;
     private long ageMonths;
     private String password;
+
 
 
 
@@ -73,6 +75,14 @@ public class Patient {
 
     //getter and setters
 
+
+    public String getIDN() {
+        return IDN;
+    }
+
+    public void setIDN(String IDN) {
+        this.IDN = IDN;
+    }
 
     public String getPassword() {
         return password;

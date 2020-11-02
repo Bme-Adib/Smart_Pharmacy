@@ -295,7 +295,7 @@ public class SignUpWindow {
         if (patient_ID.getText().trim().isEmpty()) {
             error += "Please enter ID\n";
         } else {
-            patient.setId(patient_ID.getText().trim());
+            patient.setIDN(patient_ID.getText().trim());
         }
 
         if (patient_password.getPassword().length >= 8) {
