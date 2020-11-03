@@ -9,7 +9,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SignUpOtherWindow {
+    private Thread sendEmailPharmacy = new Thread(){
+      public void run(){
+          sendEmail(pharmacy.getEmail(),pharmacy.getPharmacyName(),pharmacy.getId());
+      }
+    };
 
+    private Thread sendEmailDoctor = new Thread(){
+        public void run(){
+            sendEmail(doctor.getEmail(),"Dr. " + doctor.getFullName(),doctor.getId());
+        }
+    };
 
     private int windowWidth;
     private int windowHeight;
@@ -188,7 +198,7 @@ public class SignUpOtherWindow {
             if (!fireBase.checkPharmacy("SPPH" + pharmacy_licenceID.getText().trim())) {
                 pharmacy.continueCreation();
                 if (fireBase.writePharmacyToFireBase(pharmacy)) {
-                    sendEmail(pharmacy.getEmail(),pharmacy.getPharmacyName(),pharmacy.getId());
+                    sendEmailPharmacy.start();
                     JOptionPane.showMessageDialog(null, "Pharmacy Account Created Successfully\nPharmacy ID: " + pharmacy.getId() +
                             "\n( Please save this ID and use it to sign in )\n", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
                     moveToSignInWindow();
@@ -337,7 +347,7 @@ public class SignUpOtherWindow {
             } else {
                 doctor.continueCreation();
                 if (fireBase.writeDoctorToFireBase(doctor)) {
-                    sendEmail(doctor.getEmail(),"Dr. " + doctor.getFullName(),doctor.getId());
+                    sendEmailDoctor.start();
                     JOptionPane.showMessageDialog(null, "Doctor Account Created Successfully\nDoctor ID: " + doctor.getId() +
                             "\n( Please save this ID and use it to sign in )\n", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
                     moveToSignInWindow();
@@ -756,7 +766,7 @@ public class SignUpOtherWindow {
 
         JLabel header = new JLabel();
         header.setOpaque(true);
-        header.setBackground(PV.HEADINGCOLOR);
+        header.setBackground(PV.HEADING_COLOR_DOCTOR);
         container.add(header);
         header.setBounds(0, 0, windowWidth, 50);
     }

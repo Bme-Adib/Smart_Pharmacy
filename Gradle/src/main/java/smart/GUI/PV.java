@@ -3,18 +3,18 @@ package smart.GUI;
 import java.awt.*;
 
 public class PV {
-    public static final String APP_TITLE="Smart Pharmacy Desktop App";
-    public static final String[] GENDERS_LIST = {"Male","Female"};
+    public static final String APP_TITLE = "Smart Pharmacy Desktop App";
+    public static final String[] GENDERS_LIST = {"Male", "Female"};
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 600;
     public static final Color APPLICATION_BACKGROUND = Color.WHITE;
 
     public static final Color BLACK = Color.BLACK;
-    public static final Color HEADINGCOLOR = Color.decode("#DC143C");     // Red
-//    public static final Color HEADINGCOLOR = Color.decode("#C86EF5");   // Purple
+    public static final Color HEADING_COLOR_PHARMACY = Color.decode("#0D7D64");     // Green Pharmacy
+    public static final Color HEADING_COLOR_DOCTOR = Color.decode("#9876aa");     // Lavender Doctor
 
-    public static final String[] DRUGS = {"None","Aspirin","Panadol","Vermont","Aisha"};
-    public static final String[] DRUGS_EFFECTIVE_SUBSTANCE = {"None","Aspirin","Panadol","Vermont","Boobies"};
+    public static final String[] DRUGS = {"None", "Aspirin", "Panadol", "Vermont", "Aisha"};
+    public static final String[] DRUGS_EFFECTIVE_SUBSTANCE = {"None", "Aspirin", "Panadol", "Vermont", "Boobies"};
 
     public static final Font HEADING = new Font("Serif", Font.BOLD, 25);
     public static final Font HEADING1 = new Font("Serif", Font.BOLD, 20);

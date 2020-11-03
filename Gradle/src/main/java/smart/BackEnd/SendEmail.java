@@ -22,7 +22,7 @@ public class SendEmail {
     public void sendGreetingEmail(String to, String name, String ID) {
 
         String from = "aishaalharweel@gmail.com";
-        String password = "Faraghannam@66";
+        String password = "Aishaghannam@69";
 
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");

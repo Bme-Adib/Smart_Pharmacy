@@ -1,8 +1,8 @@
 package smart.GUI;
 
-import smart.BackEnd.Doctor;
 import smart.BackEnd.Drug;
 import smart.BackEnd.Patient;
+import smart.BackEnd.Pharmacy;
 import smart.BackEnd.PtSession;
 import smart.FireStore.FireBase;
 
@@ -15,12 +15,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class DoctorWindow {
+public class PharmacyWindow {
 
     private int windowWidth;
     private int windowHeight;
     private FireBase fireBase;
-    private Doctor doctor;
+    private Pharmacy pharmacy;
     private Patient patient;
 
     //
@@ -28,8 +28,7 @@ public class DoctorWindow {
     private Container container;
 
     //
-    private JLabel jDoctorName;
-    private JButton newPatient;
+    private JLabel jPharmacyName;
     private JLabel jPatientID;
     private JTextField patientID;
     private JLabel jFamilyName;
@@ -62,20 +61,29 @@ public class DoctorWindow {
     private JTextArea sessionDoctorNote;
     private JScrollPane sessionDoctorNoteScroll;
     private JLabel jSessionDrugs;
-    private JTextArea sessionDrugs;
-    private JScrollPane sessionDrugsScroll;
+
+    private JLabel jSessionDrug1;
+    private JLabel jSessionDrug2;
+    private JLabel jSessionDrug3;
+    private JLabel jSessionDrug4;
+    private ArrayList<JLabel> drugsLabels;
+
+    private JButton drugDispense1;
+    private JButton drugDispense2;
+    private JButton drugDispense3;
+    private JButton drugDispense4;
+    private ArrayList<JButton> dispenseButtons;
+
 
     private JList jSessionsList;
     private Border blackline;
     private ArrayList<PtSession> sessionsArrayList = new ArrayList<>();
     private ArrayList<Drug> drugArrayList = new ArrayList<>();
 
-    private JButton newSession;
 
-
-    public void runDoctor(FireBase fireBase, Doctor doctor, Patient patient) {
+    public void runPharmacy(FireBase fireBase, Pharmacy pharmacy, Patient patient) {
         this.fireBase = fireBase;
-        this.doctor = doctor;
+        this.pharmacy = pharmacy;
         this.patient = patient;
         setUpWindow();
         setUpAssignment();
@@ -85,12 +93,11 @@ public class DoctorWindow {
         setIfHasPreviousPatient();
 
 
-
         windowDoctor.setVisible(true);
     }
 
     private void setIfHasPreviousPatient() {
-        if (patient!= null){
+        if (patient != null) {
             patientID.setText(patient.getId());
             familyName.setText(patient.getLastName());
             jFamilyName.setEnabled(false);
@@ -107,35 +114,18 @@ public class DoctorWindow {
                 searchPatientMethod();
             }
         });
-        newSession.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                windowDoctor.dispose();
-                new NewSessionWindow().runNewSession(fireBase,doctor,patient);
-            }
-        });
-        newPatient.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                newPatientMethod();
-            }
-        });
-    }
 
-    private void newPatientMethod() {
-        windowDoctor.dispose();
-        new SignUpPatientWindow().runSignUp(fireBase,doctor);
     }
 
     private void searchPatientMethod() {
-        if (searchPatient.getText().equals("Search New Patient")){
+        if (searchPatient.getText().equals("Search New Patient")) {
             windowDoctor.dispose();
             patient = null;
-            new DoctorWindow().runDoctor(fireBase,doctor,patient);
-        }else{
-            if (fireBase.checkPatientID(patientID.getText().trim())){
+            new PharmacyWindow().runPharmacy(fireBase, pharmacy, patient);
+        } else {
+            if (fireBase.checkPatientID(patientID.getText().trim())) {
                 patient = fireBase.readPatient(patientID.getText().trim());
-                if (familyName.getText().trim().toLowerCase().equals(patient.getLastName().toLowerCase())){
+                if (familyName.getText().trim().toLowerCase().equals(patient.getLastName().toLowerCase())) {
                     patientFullName.setText(patient.getFullName());
                     patientGender.setText(patient.getGender());
                     patientDOB.setText(patient.getDay() + "/" + patient.getMonth() + "/" + patient.getYear());
@@ -146,7 +136,6 @@ public class DoctorWindow {
                     sessionDoctorName.setText("");
                     sessionMedicalCondiotion.setText("");
                     sessionDoctorNote.setText("");
-                    sessionDrugs.setText("");
 
 
                     setPatientVisibility(true);
@@ -156,11 +145,11 @@ public class DoctorWindow {
                     patientID.setEnabled(false);
                     familyName.setEnabled(false);
                     searchPatient.setText("Search New Patient");
-                    searchPatient.setBounds(492,80,searchPatient.getPreferredSize().width,searchPatient.getPreferredSize().height);
-                }else{
+                    searchPatient.setBounds(492, 80, searchPatient.getPreferredSize().width, searchPatient.getPreferredSize().height);
+                } else {
 
                 }
-            }else{
+            } else {
 
             }
         }
@@ -170,15 +159,10 @@ public class DoctorWindow {
     private void setUpAssignment() {
         blackline = BorderFactory.createLineBorder(Color.black, 1, true);
 
-        jDoctorName = new JLabel("Dr. " + doctor.getFullName());
-        jDoctorName.setFont(PV.HEADING2);
-        jDoctorName.setForeground(Color.WHITE);
-        container.add(jDoctorName);
-
-        newPatient = new JButton("Create New Patient");
-        newPatient.setFont(PV.HEADING2);
-        newPatient.setForeground(PV.BLACK);
-        container.add(newPatient);
+        jPharmacyName = new JLabel(pharmacy.getPharmacyName());
+        jPharmacyName.setFont(PV.HEADING2);
+        jPharmacyName.setForeground(Color.WHITE);
+        container.add(jPharmacyName);
 
         jPatientID = new JLabel("Patient ID");
         jPatientID.setFont(PV.HEADING2);
@@ -267,12 +251,12 @@ public class DoctorWindow {
 
         jFixed_SessionsList = new JLabel("Sessions List");
         jFixed_SessionsList.setFont(PV.HEADING2);
-        jFixed_SessionsList.setForeground(PV.HEADING_COLOR_DOCTOR);
+        jFixed_SessionsList.setForeground(PV.HEADING_COLOR_PHARMACY);
         container.add(jFixed_SessionsList);
 
         jFixed_SessionsDetails = new JLabel("Session Details");
         jFixed_SessionsDetails.setFont(PV.HEADING2);
-        jFixed_SessionsDetails.setForeground(PV.HEADING_COLOR_DOCTOR);
+        jFixed_SessionsDetails.setForeground(PV.HEADING_COLOR_PHARMACY);
         container.add(jFixed_SessionsDetails);
 
         jSessionDate = new JLabel("Session Date:");
@@ -330,22 +314,68 @@ public class DoctorWindow {
         jSessionDrugs.setForeground(PV.BLACK);
         container.add(jSessionDrugs);
 
-        //Text Area
-        sessionDrugs = new JTextArea(4, 60);
-        sessionDrugs.setEditable(false);
-        sessionDrugs.setLineWrap(true);
-        sessionDrugs.setWrapStyleWord(true);
-        sessionDrugsScroll = new JScrollPane(sessionDrugs);
-        sessionDrugsScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        container.add(sessionDrugsScroll);
+        jSessionDrug1 = new JLabel("ASDASD");
+        jSessionDrug1.setFont(PV.NORMALBOLD);
+        jSessionDrug1.setForeground(PV.BLACK);
+        jSessionDrug1.setVisible(false);
+        container.add(jSessionDrug1);
 
-        newSession = new JButton("New Session");
-        newSession.setFont(PV.HEADING2);
-        newSession.setForeground(PV.BLACK);
-        container.add(newSession);
+        jSessionDrug2 = new JLabel();
+        jSessionDrug2.setFont(PV.NORMALBOLD);
+        jSessionDrug2.setForeground(PV.BLACK);
+        jSessionDrug2.setVisible(false);
+        container.add(jSessionDrug2);
+
+        jSessionDrug3 = new JLabel();
+        jSessionDrug3.setFont(PV.NORMALBOLD);
+        jSessionDrug3.setForeground(PV.BLACK);
+        jSessionDrug3.setVisible(false);
+        container.add(jSessionDrug3);
+
+        jSessionDrug4 = new JLabel();
+        jSessionDrug4.setFont(PV.NORMALBOLD);
+        jSessionDrug4.setVisible(false);
+        jSessionDrug4.setForeground(PV.BLACK);
+        container.add(jSessionDrug4);
+
+        drugsLabels = new ArrayList<>();
+        drugsLabels.add(jSessionDrug1);
+        drugsLabels.add(jSessionDrug2);
+        drugsLabels.add(jSessionDrug3);
+        drugsLabels.add(jSessionDrug4);
+
+        drugDispense1 = new JButton("Dispense");
+        drugDispense1.setFont(PV.HEADING2);
+        drugDispense1.setVisible(false);
+        drugDispense1.setForeground(PV.BLACK);
+        container.add(drugDispense1);
+
+        drugDispense2 = new JButton("Dispense");
+        drugDispense2.setFont(PV.HEADING2);
+        drugDispense2.setVisible(false);
+        drugDispense2.setForeground(PV.BLACK);
+        container.add(drugDispense2);
+
+        drugDispense3 = new JButton("Dispense");
+        drugDispense3.setFont(PV.HEADING2);
+        drugDispense3.setVisible(false);
+        drugDispense3.setForeground(PV.BLACK);
+        container.add(drugDispense3);
+
+        drugDispense4 = new JButton("Dispense");
+        drugDispense4.setFont(PV.HEADING2);
+        drugDispense4.setVisible(false);
+        drugDispense4.setForeground(PV.BLACK);
+        container.add(drugDispense4);
+
+        dispenseButtons = new ArrayList<>();
+        dispenseButtons.add(drugDispense1);
+        dispenseButtons.add(drugDispense2);
+        dispenseButtons.add(drugDispense3);
+        dispenseButtons.add(drugDispense4);
+
 
     }
-
 
     private void setPlacement() {
         int xMargin11 = 30;
@@ -361,8 +391,7 @@ public class DoctorWindow {
 
         //Header
         setUpHeader();
-        jDoctorName.setBounds(windowWidth - jDoctorName.getPreferredSize().width - 20, (50 - jDoctorName.getPreferredSize().height) / 2, jDoctorName.getPreferredSize().width, jDoctorName.getPreferredSize().height);
-        newPatient.setBounds(20, (50 - newPatient.getPreferredSize().height) / 2, newPatient.getPreferredSize().width, newPatient.getPreferredSize().height);
+        jPharmacyName.setBounds(windowWidth - jPharmacyName.getPreferredSize().width - 20, (50 - jPharmacyName.getPreferredSize().height) / 2, jPharmacyName.getPreferredSize().width, jPharmacyName.getPreferredSize().height);
 
         //Other Window
 
@@ -408,7 +437,6 @@ public class DoctorWindow {
         yStep += jFixed_SessionsDetails.getPreferredSize().height + lineSpacer;
         jSessionDate.setBounds(XmarginSession11, yStep, 140, jSessionDate.getPreferredSize().height);
         sessionDate.setBounds(XmarginSession12, yStep, 300, jSessionDate.getPreferredSize().height);
-        newSession.setBounds(windowWidth-newSession.getPreferredSize().width-80,yStep,newSession.getPreferredSize().width,newSession.getPreferredSize().height);
 
         yStep += jSessionDate.getPreferredSize().height + lineSpacer;
         jSessionDoctorName.setBounds(XmarginSession11, yStep, 150, jSessionDate.getPreferredSize().height);
@@ -425,20 +453,30 @@ public class DoctorWindow {
         yStep += 70 + lineSpacer;
         jSessionDrugs.setBounds(XmarginSession11, yStep, 140, jSessionDoctorNote.getPreferredSize().height);
         yStep += jSessionDate.getPreferredSize().height + lineSpacer;
-        sessionDrugsScroll.setBounds(XmarginSession11, yStep, 400, 70);
+        jSessionDrug1.setBounds(XmarginSession11, yStep, 350, jSessionDrug1.getPreferredSize().height);
+        drugDispense1.setBounds(XmarginSession11 +350 +20, yStep, drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
+        yStep += jSessionDate.getPreferredSize().height + lineSpacer;
+        jSessionDrug2.setBounds(XmarginSession11, yStep, 350, jSessionDrug1.getPreferredSize().height);
+        drugDispense2.setBounds(XmarginSession11 +350 +20, yStep, drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
+        yStep += jSessionDate.getPreferredSize().height + lineSpacer;
+        jSessionDrug3.setBounds(XmarginSession11, yStep, 350, jSessionDrug1.getPreferredSize().height);
+        drugDispense3.setBounds(XmarginSession11 +350 +20, yStep, drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
+        yStep += jSessionDate.getPreferredSize().height + lineSpacer;
+        jSessionDrug4.setBounds(XmarginSession11, yStep, 350, jSessionDrug1.getPreferredSize().height);
+        drugDispense4.setBounds(XmarginSession11 +350 +20, yStep, drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
 
     }
 
     private void setUpHeader() {
         JLabel header = new JLabel();
         header.setOpaque(true);
-        header.setBackground(PV.HEADING_COLOR_DOCTOR);
+        header.setBackground(PV.HEADING_COLOR_PHARMACY);
         container.add(header);
         header.setBounds(0, 0, windowWidth, 50);
     }
 
     private void setUpWindow() {
-        windowDoctor = new JFrame(PV.APP_TITLE + " - Doctor Portal");
+        windowDoctor = new JFrame(PV.APP_TITLE + " - Pharmacy Portal");
         windowWidth = PV.WINDOW_WIDTH;
         windowHeight = PV.WINDOW_HEIGHT + 100;
         windowDoctor.setSize(windowWidth, windowHeight);
@@ -476,8 +514,6 @@ public class DoctorWindow {
         jSessionDoctorNote.setVisible(v);
         sessionDoctorNoteScroll.setVisible(v);
         jSessionDrugs.setVisible(v);
-        sessionDrugsScroll.setVisible(v);
-        newSession.setVisible(v);
 
     }
 
@@ -498,13 +534,11 @@ public class DoctorWindow {
         jSessionsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(e.getValueIsAdjusting()){
+                if (e.getValueIsAdjusting()) {
                     sessionDate.setText("");
                     sessionDoctorName.setText("");
                     sessionMedicalCondiotion.setText("");
                     sessionDoctorNote.setText("");
-                    sessionDrugs.setText("");
-
 
 
                     int index = jSessionsList.getSelectedIndex();
@@ -512,18 +546,29 @@ public class DoctorWindow {
                     sessionDoctorName.setText(sessionsArrayList.get(index).getDoctorsName());
                     sessionMedicalCondiotion.setText(sessionsArrayList.get(index).getMedicalCondition());
                     sessionDoctorNote.setText(sessionsArrayList.get(index).getDoctorsNotes());
-                    drugArrayList = fireBase.readPatientDrugs(patientID.getText().trim(),sessionsArrayList.get(index).getSessionID());
+                    drugArrayList = fireBase.readPatientDrugs(patientID.getText().trim(), sessionsArrayList.get(index).getSessionID());
 //                    drugArrayList = fireBase.readPatientDrugs("SPPT9306059982",sessionsArrayList.get(index).getSessionID());
-                    if (drugArrayList.size()!=0){
-                        String drugsString="";
-                        for (int i=0;i<drugArrayList.size();i++){
-                            drugsString+=drugArrayList.get(i).getDrugName() + " (" + drugArrayList.get(i).getDrugEffectiveSubstance() + ")"
-                                    + "   Dosage: " + drugArrayList.get(i).getDosage() + " mg   Rep: (" + drugArrayList.get(i).getRepetitionUsed()
-                                    + "/" + drugArrayList.get(i).getRepetition() + ").\n";
-                        }
-                        sessionDrugs.setText(drugsString);
+
+                    for (int i = 0; i < drugsLabels.size(); i++) {
+                        drugsLabels.get(i).setText("");
+                        drugsLabels.get(i).setVisible(false);
+                        dispenseButtons.get(i).setVisible(false);
                     }
 
+                    if (drugArrayList.size() != 0) {
+
+
+                        for (int i = 0; i < drugArrayList.size(); i++) {
+                            drugsLabels.get(i).setVisible(true);
+                            drugsLabels.get(i).setText((i+1) + "- " +drugArrayList.get(i).getDrugName() + " (" + drugArrayList.get(i).getDrugEffectiveSubstance()
+                                    + " )  Dosage: " + drugArrayList.get(i).getDosage() + " mg  Rep: (" + drugArrayList.get(i).getRepetitionUsed() +
+                                    "/" + drugArrayList.get(i).getRepetition() + ")");
+                            dispenseButtons.get(i).setVisible(true);
+                        }
+                    }else {
+                        drugsLabels.get(0).setVisible(true);
+                        drugsLabels.get(0).setText("No drugs are prescribed");
+                    }
 
 
                 }

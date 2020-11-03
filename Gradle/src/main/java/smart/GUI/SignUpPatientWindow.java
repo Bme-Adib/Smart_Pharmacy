@@ -10,6 +10,11 @@ import java.awt.event.ActionListener;
 
 public class SignUpPatientWindow {
 
+    Thread sendEmail = new Thread(){
+      public void run(){
+          sendEmail(patient.getEmail(),patient.getFullName(),patient.getId());
+      }
+    };
 
     private int windowWidth;
     private int windowHeight;
@@ -211,10 +216,10 @@ public class SignUpPatientWindow {
                 patient.setCreatedBy(doctor.getFullName());
                 patient.continueCreation();
                 if (fireBase.writePatientToFireBase(patient)) {
-                    sendEmail(patient.getEmail(),patient.getFullName(),patient.getId());
+
                     JOptionPane.showMessageDialog(null, "Patient Account Created Successfully\nPatient ID: " + patient.getId() +
                             "\n( Please save this ID and use it to sign in )\n", "Congratulations", JOptionPane.INFORMATION_MESSAGE);
-
+                    sendEmail.start();
                     windowSignUp.dispose();
                     new DoctorWindow().runDoctor(fireBase,doctor,patient);
 
@@ -499,7 +504,7 @@ public class SignUpPatientWindow {
 
         JLabel header = new JLabel();
         header.setOpaque(true);
-        header.setBackground(PV.HEADINGCOLOR);
+        header.setBackground(PV.HEADING_COLOR_DOCTOR);
         container.add(header);
         header.setBounds(0, 0, windowWidth, 50);
     }

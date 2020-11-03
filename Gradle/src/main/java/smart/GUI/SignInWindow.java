@@ -68,16 +68,6 @@ public class SignInWindow {
     }
 
     private void singInMethod() {
-        /*
-        1- Check if Doctor or Pharmacy          ✓
-        2- Check if user Exist                  ✓
-        3- if yes get                           ✓
-        4- Check if Password Matches the ID
-            The Methode:
-            1- read id                                          ✓
-            2- check for 3rd and 4th letters                    ✓
-            3- if(DR) then doctor and if (ph) then pharmacy     ✓
-         */
         String errorMessage = "ID or Password is wrong";
         String idByUser = id.getText();
         String temp = idByUser.substring(0, 4).toUpperCase();
@@ -139,6 +129,9 @@ public class SignInWindow {
     }
 
     private void startPharmacyWindow(FireBase fireBase, Pharmacy pharmacy) {
+        windowSignIn.dispose();
+        patient = null;
+        new PharmacyWindow().runPharmacy(fireBase,pharmacy,patient);
     }
 
     private void setUpAssignment() {
@@ -157,7 +150,7 @@ public class SignInWindow {
         jID.setForeground(PV.BLACK);
         container.add(jID);
 
-        id = new JTextField("SPDR9306057462");
+        id = new JTextField("SPPHAISHABOOBIES");
         id.setFont(PV.NORMAL);
         id.setForeground(PV.BLACK);
         container.add(id);
