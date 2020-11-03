@@ -1,14 +1,14 @@
 package smart.GUI;
 
-import smart.BackEnd.Doctor;
-import smart.BackEnd.Patient;
-import smart.BackEnd.Time_Stamp;
+import io.netty.util.internal.StringUtil;
+import smart.BackEnd.*;
 import smart.FireStore.FireBase;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class NewSessionWindow {
 
@@ -188,6 +188,92 @@ public class NewSessionWindow {
 
             }
         });
+
+        createSession.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CreateSession();
+            }
+        });
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                windowNewSession.dispose();
+                new DoctorWindow().runDoctor(fireBase,doctor,patient);
+            }
+        });
+    }
+
+    private void CreateSession() {
+        PtSession ptSession = new PtSession();
+        ptSession.setDoctorsNotes(sessionDoctorNote.getText().trim());
+        ptSession.setDoctorsName(doctor.getFullName());
+        ptSession.setMedicalCondition(sessionMedicalCondiotion.getText().trim());
+
+        ArrayList<Drug> drugArrayList = new ArrayList<>();
+        String drugString="";
+        Drug drug1drug = new Drug();
+        if (drug1.getSelectedIndex()!=0){
+            if (true){
+                drug1drug.setDrugName(drug1.getSelectedItem().toString());
+                drug1drug.setDrugEffectiveSubstance(drug1Effective.getText().trim());
+                drug1drug.setDosage(Double.parseDouble(drug1Dosage.getText().trim()));
+                drug1drug.setRepetition(Integer.parseInt(drug1Rep.getText().trim()));
+                drugString+=drug1.getSelectedItem() + "(" + drug1Effective.getText().trim() + ")" + "   Dosage: " +
+                        drug1Dosage.getText().trim() + " mg    Repetition : " + drug1Rep.getText().trim() + " time(s)<br/>";
+                drugArrayList.add(drug1drug);
+            }
+        }
+
+        Drug drug2drug = new Drug();
+        if (drug2.getSelectedIndex()!=0){
+            if (true){
+                drug2drug.setDrugName(drug2.getSelectedItem().toString());
+                drug2drug.setDrugEffectiveSubstance(drug2Effective.getText().trim());
+                drug2drug.setDosage(Double.parseDouble(drug2Dosage.getText().trim()));
+                drug2drug.setRepetition(Integer.parseInt(drug2Rep.getText().trim()));
+                drugString+=drug2.getSelectedItem() + "(" + drug2Effective.getText().trim() + ")" + "   Dosage: " +
+                        drug2Dosage.getText().trim() + " mg    Repetition : " + drug2Rep.getText().trim() + " time(s)<br/>";
+                drugArrayList.add(drug2drug);
+            }
+        }
+
+        Drug drug3drug = new Drug();
+        if (drug3.getSelectedIndex()!=0){
+            if (true){
+                drug3drug.setDrugName(drug3.getSelectedItem().toString());
+                drug3drug.setDrugEffectiveSubstance(drug3Effective.getText().trim());
+                drug3drug.setDosage(Double.parseDouble(drug3Dosage.getText().trim()));
+                drug3drug.setRepetition(Integer.parseInt(drug3Rep.getText().trim()));
+                drugString+=drug3.getSelectedItem() + "(" + drug3Effective.getText().trim() + ")" + "   Dosage: " +
+                        drug3Dosage.getText().trim() + " mg    Repetition : " + drug3Rep.getText().trim() + " time(s)<br/>";
+                drugArrayList.add(drug3drug);
+            }
+        }
+
+        Drug drug4drug = new Drug();
+        if (drug4.getSelectedIndex()!=0){
+            if (true){
+                drug4drug.setDrugName(drug4.getSelectedItem().toString());
+                drug4drug.setDrugEffectiveSubstance(drug4Effective.getText().trim());
+                drug4drug.setDosage(Double.parseDouble(drug4Dosage.getText().trim()));
+                drug4drug.setRepetition(Integer.parseInt(drug4Rep.getText().trim()));
+                drugString+=drug4.getSelectedItem() + "(" + drug4Effective.getText().trim() + ")" + "   Dosage: " +
+                        drug4Dosage.getText().trim() + " mg    Repetition : " + drug4Rep.getText().trim() + " time(s)<br/>";
+                drugArrayList.add(drug4drug);
+            }
+        }
+        ptSession.continueCreation();
+        ptSession.setSessionID(sessionID);
+        fireBase.writeSessionToPatient(patient.getId(),ptSession);
+        fireBase.writeDrugsToSession(patient.getId(),ptSession.getSessionID(),drugArrayList);
+        new SendEmail().sendSessionEmail(patient.getEmail(), patient.getFullName() ,"Dr." + doctor.getFullName(),
+                creationTime,sessionMedicalCondiotion.getText().trim().replaceAll("\n", "<br/>"),
+                sessionDoctorNote.getText().replaceAll("\n", "<br/>").trim(),drugString);
+        JOptionPane.showMessageDialog(null, "New Session Added", "Information", JOptionPane.INFORMATION_MESSAGE);
+        windowNewSession.dispose();
+        new DoctorWindow().runDoctor(fireBase,doctor,patient);
+
     }
 
     private void setUpAssignment() {
@@ -478,7 +564,7 @@ public class NewSessionWindow {
 
         yStep += jSessionDate.getPreferredSize().height + lineSpacer;
         jSessionDoctorName.setBounds(xMargin11, yStep, 150, jSessionDate.getPreferredSize().height);
-        sessionDoctorName.setBounds(xMargin12, yStep, sessionDoctorName.getPreferredSize().width, jSessionDate.getPreferredSize().height);
+        sessionDoctorName.setBounds(xMargin12, yStep, 300, jSessionDate.getPreferredSize().height);
 
         yStep += jSessionDate.getPreferredSize().height + lineSpacer;
         yStep += jSessionDate.getPreferredSize().height + lineSpacer;

@@ -64,7 +64,7 @@ public class SignInWindow {
 
     private void signUpMethod() {
         windowSignIn.dispose();
-        new SignUpWindow().runSignUp(fireBase);
+        new SignUpOtherWindow().runSignUp(fireBase);
     }
 
     private void singInMethod() {
@@ -131,7 +131,8 @@ public class SignInWindow {
 
     private void startDoctorWindow(FireBase fireBase, Doctor doctor) {
         windowSignIn.dispose();
-        new DoctorWindow().runDoctor(fireBase,doctor);
+        patient=null;
+        new DoctorWindow().runDoctor(fireBase,doctor,patient);
     }
 
     private void startPatientWindow(FireBase fireBase, Patient patient) {

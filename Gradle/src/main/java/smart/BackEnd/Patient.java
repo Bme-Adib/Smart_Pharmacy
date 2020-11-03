@@ -25,9 +25,15 @@ public class Patient {
     private long ageYears;
     private long ageMonths;
     private String password;
+    private String createdBy;
 
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
-
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
     public Patient() {
     }

@@ -73,18 +73,31 @@ public class DoctorWindow {
     private JButton newSession;
 
 
-    public void runDoctor(FireBase fireBase, Doctor doctor) {
+    public void runDoctor(FireBase fireBase, Doctor doctor, Patient patient) {
         this.fireBase = fireBase;
         this.doctor = doctor;
+        this.patient = patient;
         setUpWindow();
         setUpAssignment();
         setPatientVisibility(false);
         setPlacement();
         setClickListeners();
+        setIfHasPreviousPatient();
 
 
 
         windowDoctor.setVisible(true);
+    }
+
+    private void setIfHasPreviousPatient() {
+        if (patient!= null){
+            patientID.setText(patient.getId());
+            familyName.setText(patient.getLastName());
+            jFamilyName.setEnabled(false);
+            jPatientID.setEnabled(false);
+            patientID.setEnabled(false);
+            searchPatientMethod();
+        }
     }
 
     private void setClickListeners() {
@@ -101,12 +114,24 @@ public class DoctorWindow {
                 new NewSessionWindow().runNewSession(fireBase,doctor,patient);
             }
         });
+        newPatient.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newPatientMethod();
+            }
+        });
+    }
+
+    private void newPatientMethod() {
+        windowDoctor.dispose();
+        new SignUpPatientWindow().runSignUp(fireBase,doctor);
     }
 
     private void searchPatientMethod() {
         if (searchPatient.getText().equals("Search New Patient")){
             windowDoctor.dispose();
-            new DoctorWindow().runDoctor(fireBase,doctor);
+            patient = null;
+            new DoctorWindow().runDoctor(fireBase,doctor,patient);
         }else{
             if (fireBase.checkPatientID(patientID.getText().trim())){
                 patient = fireBase.readPatient(patientID.getText().trim());
@@ -387,7 +412,7 @@ public class DoctorWindow {
 
         yStep += jSessionDate.getPreferredSize().height + lineSpacer;
         jSessionDoctorName.setBounds(XmarginSession11, yStep, 150, jSessionDate.getPreferredSize().height);
-        sessionDoctorName.setBounds(XmarginSession12, yStep, 150, jSessionDate.getPreferredSize().height);
+        sessionDoctorName.setBounds(XmarginSession12, yStep, 300, jSessionDate.getPreferredSize().height);
 
         yStep += jSessionDate.getPreferredSize().height + lineSpacer;
         jSessionMedicalCondiotion.setBounds(XmarginSession11, yStep, 140, jSessionDate.getPreferredSize().height);
@@ -486,7 +511,7 @@ public class DoctorWindow {
                     sessionDate.setText(sessionsArrayList.get(index).getSessionTimeStamp());
                     sessionDoctorName.setText(sessionsArrayList.get(index).getDoctorsName());
                     sessionMedicalCondiotion.setText(sessionsArrayList.get(index).getMedicalCondition());
-                    sessionDoctorNote.setText(sessionsArrayList.get(index).getGetDoctorsNotes());
+                    sessionDoctorNote.setText(sessionsArrayList.get(index).getDoctorsNotes());
                     drugArrayList = fireBase.readPatientDrugs(patientID.getText().trim(),sessionsArrayList.get(index).getSessionID());
 //                    drugArrayList = fireBase.readPatientDrugs("SPPT9306059982",sessionsArrayList.get(index).getSessionID());
                     if (drugArrayList.size()!=0){

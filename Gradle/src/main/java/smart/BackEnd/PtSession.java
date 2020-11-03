@@ -1,22 +1,25 @@
 package smart.BackEnd;
 
-import java.util.ArrayList;
-
 public class PtSession {
     private String medicalCondition;
     private String doctorsName;
     private String sessionTimeStamp;
     private String sessionID;
-    private String getDoctorsNotes;
+    private String doctorsNotes;
 
     public PtSession() {
     }
 
-    public PtSession(String medicalCondition, String doctorsName, String getDoctorsNotes) {
+    public PtSession(String medicalCondition, String doctorsName, String doctorsNotes) {
         this.medicalCondition = medicalCondition;
         this.doctorsName = doctorsName;
-        this.getDoctorsNotes = getDoctorsNotes;
+        this.doctorsNotes = doctorsNotes;
 
+        sessionTimeStamp = new Time_Stamp().getCreationTime();
+        sessionID = new Time_Stamp().getTimeId();
+    }
+
+    public void continueCreation(){
         sessionTimeStamp = new Time_Stamp().getCreationTime();
         sessionID = new Time_Stamp().getTimeId();
     }
@@ -56,11 +59,11 @@ public class PtSession {
     }
 
 
-    public String getGetDoctorsNotes() {
-        return getDoctorsNotes;
+    public String getDoctorsNotes() {
+        return doctorsNotes;
     }
 
-    public void setGetDoctorsNotes(String getDoctorsNotes) {
-        this.getDoctorsNotes = getDoctorsNotes;
+    public void setDoctorsNotes(String doctorsNotes) {
+        this.doctorsNotes = doctorsNotes;
     }
 }
