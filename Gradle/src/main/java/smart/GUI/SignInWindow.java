@@ -131,18 +131,18 @@ public class SignInWindow {
     private void startPharmacyWindow(FireBase fireBase, Pharmacy pharmacy) {
         windowSignIn.dispose();
         patient = null;
-        new PharmacyWindow().runPharmacy(fireBase,pharmacy,patient);
+        new PharmacyWindow().runPharmacy(fireBase,pharmacy,patient,0);
     }
 
     private void setUpAssignment() {
-        jTile = new JLabel("Smart Pharmacy");
+        jTile = new JLabel("IOT Safe Pharmacy");
         jTile.setFont(PV.HEADING);
-        jTile.setForeground(PV.BLACK);
+        jTile.setForeground(PV.HEADING_COLOR_PHARMACY);
         container.add(jTile);
 
         logo = new JLabel();
         container.add(logo);
-        logoImage = new ImageIcon(this.getClass().getResource("/sign_in_logo.jpg")).getImage();
+        logoImage = new ImageIcon(this.getClass().getResource("/sign_in_logo.png")).getImage();
         logo.setIcon(new ImageIcon(logoImage));
 
         jID = new JLabel("ID");
@@ -200,6 +200,7 @@ public class SignInWindow {
 
         //Line 3
         yStep += logo_dim + lineSpacer;
+        yStep += jID.getPreferredSize().height + lineSpacer;
         jID.setBounds(300, yStep, jID.getPreferredSize().width, jID.getPreferredSize().height);
         id.setBounds(370, yStep, 130, id.getPreferredSize().height);
 

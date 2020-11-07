@@ -6,6 +6,7 @@ public class Drug {
     private double dosage;
     private int repetition;
     private int repetitionUsed = 0;
+    private String log="";
 
 
     public Drug() {
@@ -16,6 +17,14 @@ public class Drug {
         this.drugEffectiveSubstance = drugEffective;
         this.dosage = dosage;
         this.repetition = repetition;
+    }
+
+    public String getLog() {
+        return log;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
     }
 
     // setters and getters

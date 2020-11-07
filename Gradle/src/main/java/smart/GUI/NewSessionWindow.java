@@ -210,10 +210,10 @@ public class NewSessionWindow {
         ptSession.setMedicalCondition(sessionMedicalCondiotion.getText().trim());
 
         ArrayList<Drug> drugArrayList = new ArrayList<>();
-
+        boolean allCorrect=true;
         Drug drug1drug = new Drug();
         if (drug1.getSelectedIndex() != 0) {
-            if (true) {
+            if (checkIfNumber(drug1Dosage.getText().trim()) && checkIfNumber(drug1Rep.getText().trim())) {
                 drug1drug.setDrugName(drug1.getSelectedItem().toString());
                 drug1drug.setDrugEffectiveSubstance(drug1Effective.getText().trim());
                 drug1drug.setDosage(Double.parseDouble(drug1Dosage.getText().trim()));
@@ -221,12 +221,15 @@ public class NewSessionWindow {
                 drugString += drug1.getSelectedItem() + "(" + drug1Effective.getText().trim() + ")" + "   Dosage: " +
                         drug1Dosage.getText().trim() + " mg    Repetition : " + drug1Rep.getText().trim() + " time(s)<br/>";
                 drugArrayList.add(drug1drug);
+            }else{
+                allCorrect=false;
+                JOptionPane.showMessageDialog(null, "Invalid first drug dosage or repetition", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
         Drug drug2drug = new Drug();
         if (drug2.getSelectedIndex() != 0) {
-            if (true) {
+            if (checkIfNumber(drug2Dosage.getText().trim()) && checkIfNumber(drug2Rep.getText().trim())) {
                 drug2drug.setDrugName(drug2.getSelectedItem().toString());
                 drug2drug.setDrugEffectiveSubstance(drug2Effective.getText().trim());
                 drug2drug.setDosage(Double.parseDouble(drug2Dosage.getText().trim()));
@@ -234,12 +237,15 @@ public class NewSessionWindow {
                 drugString += drug2.getSelectedItem() + "(" + drug2Effective.getText().trim() + ")" + "   Dosage: " +
                         drug2Dosage.getText().trim() + " mg    Repetition : " + drug2Rep.getText().trim() + " time(s)<br/>";
                 drugArrayList.add(drug2drug);
+            }else{
+                allCorrect=false;
+                JOptionPane.showMessageDialog(null, "Invalid second drug dosage or repetition", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
         Drug drug3drug = new Drug();
         if (drug3.getSelectedIndex() != 0) {
-            if (true) {
+            if (checkIfNumber(drug3Dosage.getText().trim()) && checkIfNumber(drug3Rep.getText().trim())) {
                 drug3drug.setDrugName(drug3.getSelectedItem().toString());
                 drug3drug.setDrugEffectiveSubstance(drug3Effective.getText().trim());
                 drug3drug.setDosage(Double.parseDouble(drug3Dosage.getText().trim()));
@@ -247,12 +253,15 @@ public class NewSessionWindow {
                 drugString += drug3.getSelectedItem() + "(" + drug3Effective.getText().trim() + ")" + "   Dosage: " +
                         drug3Dosage.getText().trim() + " mg    Repetition : " + drug3Rep.getText().trim() + " time(s)<br/>";
                 drugArrayList.add(drug3drug);
+            }else{
+                allCorrect=false;
+                JOptionPane.showMessageDialog(null, "Invalid third drug dosage or repetition", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
         Drug drug4drug = new Drug();
         if (drug4.getSelectedIndex() != 0) {
-            if (true) {
+            if (checkIfNumber(drug4Dosage.getText().trim()) && checkIfNumber(drug4Rep.getText().trim())) {
                 drug4drug.setDrugName(drug4.getSelectedItem().toString());
                 drug4drug.setDrugEffectiveSubstance(drug4Effective.getText().trim());
                 drug4drug.setDosage(Double.parseDouble(drug4Dosage.getText().trim()));
@@ -260,17 +269,21 @@ public class NewSessionWindow {
                 drugString += drug4.getSelectedItem() + "(" + drug4Effective.getText().trim() + ")" + "   Dosage: " +
                         drug4Dosage.getText().trim() + " mg    Repetition : " + drug4Rep.getText().trim() + " time(s)<br/>";
                 drugArrayList.add(drug4drug);
+            }else{
+                allCorrect=false;
+                JOptionPane.showMessageDialog(null, "Invalid fourth drug dosage or repetition", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-        ptSession.continueCreation();
-        ptSession.setSessionID(sessionID);
-        fireBase.writeSessionToPatient(patient.getId(), ptSession);
-        fireBase.writeDrugsToSession(patient.getId(), ptSession.getSessionID(), drugArrayList);
-        sendEmail.start();
-        JOptionPane.showMessageDialog(null, "New Session Added", "Information", JOptionPane.INFORMATION_MESSAGE);
-        windowNewSession.dispose();
-        new DoctorWindow().runDoctor(fireBase, doctor, patient);
-
+        if (allCorrect) {
+            ptSession.continueCreation();
+            ptSession.setSessionID(sessionID);
+            fireBase.writeSessionToPatient(patient.getId(), ptSession);
+            fireBase.writeDrugsToSession(patient.getId(), ptSession.getSessionID(), drugArrayList);
+            sendEmail.start();
+            JOptionPane.showMessageDialog(null, "New Session Added", "Information", JOptionPane.INFORMATION_MESSAGE);
+            windowNewSession.dispose();
+            new DoctorWindow().runDoctor(fireBase, doctor, patient);
+        }
     }
 
     private void setUpAssignment() {
@@ -625,5 +638,12 @@ public class NewSessionWindow {
         header.setBounds(0, 0, windowWidth, 50);
     }
 
-
+    private boolean checkIfNumber(String n) {
+        try {
+            Double.parseDouble(n);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

@@ -1,9 +1,6 @@
 package smart.GUI;
 
-import smart.BackEnd.Drug;
-import smart.BackEnd.Patient;
-import smart.BackEnd.Pharmacy;
-import smart.BackEnd.PtSession;
+import smart.BackEnd.*;
 import smart.FireStore.FireBase;
 
 import javax.swing.*;
@@ -22,9 +19,10 @@ public class PharmacyWindow {
     private FireBase fireBase;
     private Pharmacy pharmacy;
     private Patient patient;
+    private int jListIndex;
 
     //
-    private JFrame windowDoctor;
+    private JFrame windowPharmacy;
     private Container container;
 
     //
@@ -74,6 +72,12 @@ public class PharmacyWindow {
     private JButton drugDispense4;
     private ArrayList<JButton> dispenseButtons;
 
+    private JButton drugLog1;
+    private JButton drugLog2;
+    private JButton drugLog3;
+    private JButton drugLog4;
+    private ArrayList<JButton> logButtons;
+
 
     private JList jSessionsList;
     private Border blackline;
@@ -81,10 +85,11 @@ public class PharmacyWindow {
     private ArrayList<Drug> drugArrayList = new ArrayList<>();
 
 
-    public void runPharmacy(FireBase fireBase, Pharmacy pharmacy, Patient patient) {
+    public void runPharmacy(FireBase fireBase, Pharmacy pharmacy, Patient patient,int jListIndex) {
         this.fireBase = fireBase;
         this.pharmacy = pharmacy;
         this.patient = patient;
+        this.jListIndex=jListIndex;
         setUpWindow();
         setUpAssignment();
         setPatientVisibility(false);
@@ -93,7 +98,7 @@ public class PharmacyWindow {
         setIfHasPreviousPatient();
 
 
-        windowDoctor.setVisible(true);
+        windowPharmacy.setVisible(true);
     }
 
     private void setIfHasPreviousPatient() {
@@ -104,6 +109,7 @@ public class PharmacyWindow {
             jPatientID.setEnabled(false);
             patientID.setEnabled(false);
             searchPatientMethod();
+            jSessionsList.setSelectedIndex(jListIndex);
         }
     }
 
@@ -119,9 +125,9 @@ public class PharmacyWindow {
 
     private void searchPatientMethod() {
         if (searchPatient.getText().equals("Search New Patient")) {
-            windowDoctor.dispose();
+            windowPharmacy.dispose();
             patient = null;
-            new PharmacyWindow().runPharmacy(fireBase, pharmacy, patient);
+            new PharmacyWindow().runPharmacy(fireBase, pharmacy, patient,0);
         } else {
             if (fireBase.checkPatientID(patientID.getText().trim())) {
                 patient = fireBase.readPatient(patientID.getText().trim());
@@ -374,6 +380,36 @@ public class PharmacyWindow {
         dispenseButtons.add(drugDispense3);
         dispenseButtons.add(drugDispense4);
 
+        drugLog1 = new JButton("Log");
+        drugLog1.setFont(PV.HEADING2);
+        drugLog1.setVisible(false);
+        drugLog1.setForeground(PV.BLACK);
+        container.add(drugLog1);
+
+        drugLog2 = new JButton("Log");
+        drugLog2.setFont(PV.HEADING2);
+        drugLog2.setVisible(false);
+        drugLog2.setForeground(PV.BLACK);
+        container.add(drugLog2);
+
+        drugLog3 = new JButton("Log");
+        drugLog3.setFont(PV.HEADING2);
+        drugLog3.setVisible(false);
+        drugLog3.setForeground(PV.BLACK);
+        container.add(drugLog3);
+
+        drugLog4 = new JButton("Log");
+        drugLog4.setFont(PV.HEADING2);
+        drugLog4.setVisible(false);
+        drugLog4.setForeground(PV.BLACK);
+        container.add(drugLog4);
+
+        logButtons = new ArrayList<>();
+        logButtons.add(drugLog1);
+        logButtons.add(drugLog2);
+        logButtons.add(drugLog3);
+        logButtons.add(drugLog4);
+
 
     }
 
@@ -454,17 +490,20 @@ public class PharmacyWindow {
         jSessionDrugs.setBounds(XmarginSession11, yStep, 140, jSessionDoctorNote.getPreferredSize().height);
         yStep += jSessionDate.getPreferredSize().height + lineSpacer;
         jSessionDrug1.setBounds(XmarginSession11, yStep, 350, jSessionDrug1.getPreferredSize().height);
-        drugDispense1.setBounds(XmarginSession11 +350 +20, yStep, drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
+        drugDispense1.setBounds(XmarginSession11 + 350 + 20, yStep, drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
+        drugLog1.setBounds(XmarginSession11 +350 +20 + drugDispense1.getPreferredSize().width + 20,yStep,drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
         yStep += jSessionDate.getPreferredSize().height + lineSpacer;
         jSessionDrug2.setBounds(XmarginSession11, yStep, 350, jSessionDrug1.getPreferredSize().height);
-        drugDispense2.setBounds(XmarginSession11 +350 +20, yStep, drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
+        drugDispense2.setBounds(XmarginSession11 + 350 + 20, yStep, drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
+        drugLog2.setBounds(XmarginSession11 +350 +20 + drugDispense1.getPreferredSize().width + 20,yStep,drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
         yStep += jSessionDate.getPreferredSize().height + lineSpacer;
         jSessionDrug3.setBounds(XmarginSession11, yStep, 350, jSessionDrug1.getPreferredSize().height);
-        drugDispense3.setBounds(XmarginSession11 +350 +20, yStep, drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
+        drugDispense3.setBounds(XmarginSession11 + 350 + 20, yStep, drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
+        drugLog3.setBounds(XmarginSession11 +350 +20 + drugDispense1.getPreferredSize().width + 20,yStep,drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
         yStep += jSessionDate.getPreferredSize().height + lineSpacer;
         jSessionDrug4.setBounds(XmarginSession11, yStep, 350, jSessionDrug1.getPreferredSize().height);
-        drugDispense4.setBounds(XmarginSession11 +350 +20, yStep, drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
-
+        drugDispense4.setBounds(XmarginSession11 + 350 + 20, yStep, drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
+        drugLog4.setBounds(XmarginSession11 +350 +20 + drugDispense1.getPreferredSize().width + 20,yStep,drugDispense1.getPreferredSize().width, jSessionDrug1.getPreferredSize().height);
     }
 
     private void setUpHeader() {
@@ -476,16 +515,16 @@ public class PharmacyWindow {
     }
 
     private void setUpWindow() {
-        windowDoctor = new JFrame(PV.APP_TITLE + " - Pharmacy Portal");
+        windowPharmacy = new JFrame(PV.APP_TITLE + " - Pharmacy Portal");
         windowWidth = PV.WINDOW_WIDTH;
         windowHeight = PV.WINDOW_HEIGHT + 100;
-        windowDoctor.setSize(windowWidth, windowHeight);
-        windowDoctor.setResizable(false);
+        windowPharmacy.setSize(windowWidth, windowHeight);
+        windowPharmacy.setResizable(false);
 //        windowSignIn.setUndecorated(true);
-        windowDoctor.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        windowPharmacy.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        windowDoctor.setLocation((screenSize.width - windowWidth) / 2, (screenSize.height - windowHeight) / 2);
-        container = windowDoctor.getContentPane();
+        windowPharmacy.setLocation((screenSize.width - windowWidth) / 2, (screenSize.height - windowHeight) / 2);
+        container = windowPharmacy.getContentPane();
         container.setBackground(PV.APPLICATION_BACKGROUND);
         container.setLayout(null);
     }
@@ -534,7 +573,7 @@ public class PharmacyWindow {
         jSessionsList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (e.getValueIsAdjusting()) {
+                if (!e.getValueIsAdjusting()) {
                     sessionDate.setText("");
                     sessionDoctorName.setText("");
                     sessionMedicalCondiotion.setText("");
@@ -553,6 +592,7 @@ public class PharmacyWindow {
                         drugsLabels.get(i).setText("");
                         drugsLabels.get(i).setVisible(false);
                         dispenseButtons.get(i).setVisible(false);
+                        logButtons.get(i).setVisible(false);
                     }
 
                     if (drugArrayList.size() != 0) {
@@ -560,12 +600,48 @@ public class PharmacyWindow {
 
                         for (int i = 0; i < drugArrayList.size(); i++) {
                             drugsLabels.get(i).setVisible(true);
-                            drugsLabels.get(i).setText((i+1) + "- " +drugArrayList.get(i).getDrugName() + " (" + drugArrayList.get(i).getDrugEffectiveSubstance()
+                            drugsLabels.get(i).setText((i + 1) + "- " + drugArrayList.get(i).getDrugName() + " (" + drugArrayList.get(i).getDrugEffectiveSubstance()
                                     + " )  Dosage: " + drugArrayList.get(i).getDosage() + " mg  Rep: (" + drugArrayList.get(i).getRepetitionUsed() +
                                     "/" + drugArrayList.get(i).getRepetition() + ")");
                             dispenseButtons.get(i).setVisible(true);
+                            logButtons.get(i).setVisible(true);
+                            Drug drug = drugArrayList.get(i);
+                            if (drug.getRepetition() <= drug.getRepetitionUsed()) {
+                                System.out.println("Limit");
+                                dispenseButtons.get(i).setEnabled(false);
+                            }else{
+                                dispenseButtons.get(i).setEnabled(true);
+                            }
+
+                            int finalI = i;
+                            logButtons.get(i).addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    String log;
+                                    if (drugArrayList.get(finalI).getLog().isEmpty()){
+                                        log = "No Logs Listed";
+                                    }else {
+                                        log = drugArrayList.get(finalI).getLog();
+                                    }
+                                    JOptionPane.showMessageDialog(null, log, "Log", JOptionPane.INFORMATION_MESSAGE);
+
+                                }
+                            });
+
+                            dispenseButtons.get(i).addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    drug.setRepetitionUsed(drug.getRepetitionUsed() + 1);
+                                    String log= "Dispensed at: " + new Time_Stamp().getCreationTime() + ", Pharmacy Name: " + pharmacy.getPharmacyName() +"\n";
+                                    drug.setLog(drug.getLog() + log);
+                                    fireBase.writeDrugToSession(patient.getId(), sessionsArrayList.get(index).getSessionID(), drug);
+                                    dispenseDrugFromMachine();
+                                    windowPharmacy.dispose();
+                                    new PharmacyWindow().runPharmacy(fireBase,pharmacy,patient,jSessionsList.getSelectedIndex());
+                                }
+                            });
                         }
-                    }else {
+                    } else {
                         drugsLabels.get(0).setVisible(true);
                         drugsLabels.get(0).setText("No drugs are prescribed");
                     }
@@ -574,6 +650,10 @@ public class PharmacyWindow {
                 }
             }
         });
+
+    }
+
+    private void dispenseDrugFromMachine() {
 
     }
 

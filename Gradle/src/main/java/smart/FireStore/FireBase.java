@@ -384,4 +384,22 @@ public class FireBase {
         return drugArrayList;
     }
 
+    public boolean writeDrugToSession(String patientID, String sessionID, Drug drug) {
+        boolean success = false;
+        Firestore db = FirestoreClient.getFirestore();
+        CollectionReference colRef = db.collection(PATIENTS).document(patientID).collection(SESSION).document(sessionID).collection(DRUGS);
+
+        ApiFuture<WriteResult> result = null;
+            result = colRef.document(drug.getDrugName()).set(drug);
+
+        try {
+            System.out.println("Update time : " + result.get().getUpdateTime());
+            success = true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return success;
+    }
+
+
 }
