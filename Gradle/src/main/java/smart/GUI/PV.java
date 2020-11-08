@@ -3,7 +3,7 @@ package smart.GUI;
 import java.awt.*;
 
 public class PV {
-    public static final String APP_TITLE = "IOT Safe Pharmacy";
+    public static final String APP_TITLE = "IOT Safe Pharmacy V1.0";
     public static final String[] GENDERS_LIST = {"Male", "Female"};
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 600;
