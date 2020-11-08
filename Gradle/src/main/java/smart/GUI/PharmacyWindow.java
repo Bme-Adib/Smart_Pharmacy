@@ -631,13 +631,32 @@ public class PharmacyWindow {
                             dispenseButtons.get(i).addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    drug.setRepetitionUsed(drug.getRepetitionUsed() + 1);
-                                    String log= "Dispensed at: " + new Time_Stamp().getCreationTime() + ", Pharmacy Name: " + pharmacy.getPharmacyName() +"\n";
-                                    drug.setLog(drug.getLog() + log);
-                                    fireBase.writeDrugToSession(patient.getId(), sessionsArrayList.get(index).getSessionID(), drug);
-                                    dispenseDrugFromMachine();
-                                    windowPharmacy.dispose();
-                                    new PharmacyWindow().runPharmacy(fireBase,pharmacy,patient,jSessionsList.getSelectedIndex());
+                                    String otp = new GenerateRandom().generateNumerical(6);
+                                    String drugDetail=drugArrayList.get(finalI).getDrugName() + " (" + drugArrayList.get(finalI).getDrugEffectiveSubstance()+
+                                            ")   Dosage: " + drugArrayList.get(finalI).getDosage() + "mg   Repetition: " + drugArrayList.get(finalI).getRepetitionUsed()+
+                                            "/" + drugArrayList.get(finalI).getRepetition();
+                                    new SendEmail().sendDrugDispensePermissionEmail(patient.getEmail(),patient.getFullName(),pharmacy.getPharmacyName(),
+                                            drugDetail,otp);
+                                    String inputOTP = JOptionPane.showInputDialog(null,"Please Enter The patient OTP","OTP",
+                                            JOptionPane.QUESTION_MESSAGE);
+                                    if (inputOTP.trim().equals(otp)){
+                                        drug.setRepetitionUsed(drug.getRepetitionUsed() + 1);
+                                        String log= "Dispensed at: " + new Time_Stamp().getCreationTime() + ", Pharmacy Name: " + pharmacy.getPharmacyName() +"\n";
+                                        drug.setLog(drug.getLog() + log);
+                                        fireBase.writeDrugToSession(patient.getId(), sessionsArrayList.get(index).getSessionID(), drug);
+                                        dispenseDrugFromMachine();
+                                        drugDetail=drugArrayList.get(finalI).getDrugName() + " (" + drugArrayList.get(finalI).getDrugEffectiveSubstance()+
+                                                ")   Dosage: " + drugArrayList.get(finalI).getDosage() + "mg   Repetition: " + (drugArrayList.get(finalI).getRepetitionUsed())+
+                                                "/" + drugArrayList.get(finalI).getRepetition();
+                                        new SendEmail().sendDrugDispenseInfoEmail(patient.getEmail(),patient.getFullName(),pharmacy.getPharmacyName(),
+                                                drugDetail,new Time_Stamp().getCreationTime());
+                                        windowPharmacy.dispose();
+                                        new PharmacyWindow().runPharmacy(fireBase,pharmacy,patient,jSessionsList.getSelectedIndex());
+
+                                    }else{
+                                        JOptionPane.showMessageDialog(null, "OTP Don't Match", "Error", JOptionPane.ERROR_MESSAGE);
+                                    }
+
                                 }
                             });
                         }
