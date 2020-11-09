@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Gradle.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Gradle.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Gradle.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Gradle.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/Smart Pharmacy.iml" filepath="$PROJECT_DIR$/Smart Pharmacy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/iot_safe/iot_safe.iml" filepath="$PROJECT_DIR$/iot_safe/iot_safe.iml" />
     </modules>
   </component>
 </project>
