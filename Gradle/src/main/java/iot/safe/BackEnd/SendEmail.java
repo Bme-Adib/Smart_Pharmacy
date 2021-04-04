@@ -56,7 +56,7 @@ public class SendEmail {
 
 
             String Messgae = "<h1><strong>Welcome "+ name +"</strong></h1>\n" +
-                    "<p>You have signed up successfully for smart pharmacy account</p>\n" +
+                    "<p>You have signed up successfully for IOT Safe Pharmacy account</p>\n" +
                     "<p><strong>your account ID : "+ ID +"</strong></p>";
             Messgae+=messageAddition;
             // Now set the actual message

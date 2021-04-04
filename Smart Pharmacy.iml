@@ -10,5 +10,7 @@
     <orderEntry type="library" name="Gradle: com.google.auth:google-auth-library-oauth2-http:0.20.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-admin:7.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.cloud:google-cloud-firestore:1.35.0" level="project" />
+    <orderEntry type="library" name="arduino" level="project" />
+    <orderEntry type="library" name="arduino1" level="project" />
   </component>
 </module>

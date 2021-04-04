@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.id="Gradle" external.linked.project.path="$MODULE_DIR$/../../Gradle" external.root.project.path="$MODULE_DIR$/../../Gradle" external.system.id="GRADLE" external.system.module.group="smart" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
   <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="smart" externalSystemModuleVersion="1.0-SNAPSHOT" linkedProjectId="Gradle" linkedProjectPath="$MODULE_DIR$/../../Gradle" rootProjectPath="$MODULE_DIR$/../../Gradle" />
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_15" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../Gradle">
       <excludeFolder url="file://$MODULE_DIR$/../../Gradle/.gradle" />
@@ -9,5 +9,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="arduino1" level="project" />
   </component>
 </module>

@@ -185,7 +185,7 @@ public class DoctorWindow {
         jPatientID.setForeground(PV.BLACK);
         container.add(jPatientID);
 
-        patientID = new JTextField("SPPT9306059982");
+        patientID = new JTextField("");
         patientID.setFont(PV.HEADING2);
         patientID.setForeground(PV.BLACK);
         container.add(patientID);
@@ -195,7 +195,7 @@ public class DoctorWindow {
         jFamilyName.setForeground(PV.BLACK);
         container.add(jFamilyName);
 
-        familyName = new JTextField("Ghannam");
+        familyName = new JTextField("");
         familyName.setFont(PV.HEADING2);
         familyName.setForeground(PV.BLACK);
         container.add(familyName);

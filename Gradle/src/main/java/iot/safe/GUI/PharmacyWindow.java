@@ -153,10 +153,10 @@ public class PharmacyWindow {
                     searchPatient.setText("Search New Patient");
                     searchPatient.setBounds(492, 80, searchPatient.getPreferredSize().width, searchPatient.getPreferredSize().height);
                 } else {
-
+                    JOptionPane.showMessageDialog(null, "Invalid ID or family name", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-
+                JOptionPane.showMessageDialog(null, "Invalid ID or family name", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -175,7 +175,7 @@ public class PharmacyWindow {
         jPatientID.setForeground(PV.BLACK);
         container.add(jPatientID);
 
-        patientID = new JTextField("SPPT9306059982");
+        patientID = new JTextField("");
         patientID.setFont(PV.HEADING2);
         patientID.setForeground(PV.BLACK);
         container.add(patientID);
@@ -185,7 +185,7 @@ public class PharmacyWindow {
         jFamilyName.setForeground(PV.BLACK);
         container.add(jFamilyName);
 
-        familyName = new JTextField("Ghannam");
+        familyName = new JTextField("");
         familyName.setFont(PV.HEADING2);
         familyName.setForeground(PV.BLACK);
         container.add(familyName);

@@ -1,9 +1,9 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Smart_Pharmacy:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/</output-path>
+  <artifact type="jar" name="Smart_Pharmacy:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Smart_Pharmacy_jar</output-path>
     <root id="archive" name="Smart_Pharmacy.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/../META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="Gradle.main" />
       <element id="module-output" name="Smart Pharmacy" />
@@ -81,6 +81,9 @@
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.mail/javax.mail/1.6.0/a055c648842c4954c1f7db7254f45d9ad565e278/javax.mail-1.6.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.cloud/google-cloud-core-http/1.93.6/a496fcbdfd64b3b770337d0ca4bfc0b2fc0fc2e1/google-cloud-core-http-1.93.6.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.3.4/dac170e4594de319655ffb62f41cbd6dbb5e601e/error_prone_annotations-2.3.4.jar" path-in-jar="/" />
+      <element id="module-source" name="Gradle.main" />
+      <element id="module-source" name="iot_safe" />
+      <element id="module-source" name="Smart Pharmacy" />
     </root>
   </artifact>
 </component>

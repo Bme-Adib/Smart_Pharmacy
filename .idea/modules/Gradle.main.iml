@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.id="Gradle:main" external.linked.project.path="$MODULE_DIR$/../../Gradle" external.root.project.path="$MODULE_DIR$/../../Gradle" external.system.id="GRADLE" external.system.module.group="smart" external.system.module.type="sourceSet" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
   <component name="ExternalSystem" externalSystem="GRADLE" externalSystemModuleGroup="smart" externalSystemModuleType="sourceSet" externalSystemModuleVersion="1.0-SNAPSHOT" linkedProjectId="Gradle:main" linkedProjectPath="$MODULE_DIR$/../../Gradle" rootProjectPath="$MODULE_DIR$/../../Gradle" />
-  <component name="NewModuleRootManager">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_15">
     <output url="file://$MODULE_DIR$/../../Gradle/build/classes/java/main" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../Gradle/src/main">
@@ -10,10 +10,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Gradle: com.sun.mail:javax.mail:1.6.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-admin:7.0.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.cloud:google-cloud-firestore:1.35.0" level="project" />
-    <orderEntry type="library" name="Gradle: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" name="Gradle: com.sun.mail:javax.mail:1.6.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.fazecast:jSerialComm:2.5.2" level="project" />
     <orderEntry type="library" name="Gradle: com.google.api-client:google-api-client-gson:1.30.10" level="project" />
     <orderEntry type="library" name="Gradle: com.google.cloud:google-cloud-storage:1.110.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.api-client:google-api-client:1.30.10" level="project" />
@@ -68,6 +68,7 @@
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.6" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.11.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.protobuf:protobuf-java-util:3.12.2" level="project" />
+    <orderEntry type="library" name="Gradle: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.http-client:google-http-client-gson:1.36.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.oauth-client:google-oauth-client:1.31.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.apis:google-api-services-storage:v1-rev20200430-1.30.9" level="project" />
@@ -81,5 +82,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.google.android:annotations:4.1.1.4" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: io.perfmark:perfmark-api:0.19.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.codehaus.mojo:animal-sniffer-annotations:1.18" level="project" />
+    <orderEntry type="library" name="arduino1" level="project" />
   </component>
 </module>

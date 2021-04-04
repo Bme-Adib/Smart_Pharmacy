@@ -150,7 +150,7 @@ public class SignInWindow {
         jID.setForeground(PV.BLACK);
         container.add(jID);
 
-        id = new JTextField("SPPHAISHABOOBIES");
+        id = new JTextField("");
         id.setFont(PV.NORMAL);
         id.setForeground(PV.BLACK);
         container.add(id);
@@ -160,7 +160,7 @@ public class SignInWindow {
         jPassword.setForeground(PV.BLACK);
         container.add(jPassword);
 
-        password = new JPasswordField("12345678");
+        password = new JPasswordField("");
         password.setFont(PV.NORMAL);
         password.setForeground(PV.BLACK);
         container.add(password);
